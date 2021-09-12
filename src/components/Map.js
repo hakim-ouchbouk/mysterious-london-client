@@ -2,6 +2,7 @@ import React from "react";
 
 class Map extends React.Component {
   render() {
+    if (this.props.geocode.lat === 0) return "LOCATION NOT FOUND";
     return (
       <iframe
         title="map"

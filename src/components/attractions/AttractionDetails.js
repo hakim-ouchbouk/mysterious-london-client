@@ -162,17 +162,30 @@ class AttractionDetails extends React.Component {
     );
   };
 
+  renderImages = (images) => {
+    if (images.length > 0) {
+      return images.map(({ url, public_id }) => {
+        return (
+          <img
+            key={public_id}
+            src={url}
+            alt={public_id}
+            style={{ width: "200px", height: "200px" }}
+          />
+        );
+      });
+    }
+
+    return "";
+  };
+
   renderAttraction = () => {
     if (this.props.attraction) {
-      let { name, description, imageURLs, location, _id, geocode } =
+      let { name, description, images, location, _id, geocode } =
         this.props.attraction;
       return (
         <div>
-          <img
-            src={imageURLs[0]}
-            alt={name}
-            style={{ width: "200px", height: "200px" }}
-          />
+          <div>{this.renderImages(images  )}</div>
           <br />
           <Map location={location} geocode={geocode} />
           <br />

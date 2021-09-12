@@ -10,6 +10,7 @@ class Edit extends React.Component {
       description: "",
       location: "",
       images: null,
+      deleteImages: [],
     };
   }
 
@@ -43,10 +44,45 @@ class Edit extends React.Component {
     this.props.editAttraction({ ...this.state, _id });
   };
 
+  renderImages = (images) => {
+    if (images) {
+      return images.map((image, i) => {
+        return (
+          <img
+            onClick={() => {
+              let deleteImages = [...this.state.deleteImages];
+              let index = deleteImages.indexOf(image);
+              if (index < 0) {
+                deleteImages.push(image);
+                this.setState({ deleteImages });
+              } else  {
+                deleteImages.splice(index,1)
+                this.setState({ deleteImages });
+              }
+            }}
+            key={image.public_id}
+            src={image.url}
+            alt={image.public_id}
+            style={{ width: "200px", height: "200px" }}
+          />
+        );
+      });
+    }
+
+    return "";
+  };
+
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+          <div>
+            Select To Delete Images:
+            <div>
+              {this.props.attraction &&
+                this.renderImages(this.props.attraction.images)}
+            </div>
+          </div>
           <label htmlFor="name">Name:</label>
           <input
             type="text"
@@ -70,7 +106,7 @@ class Edit extends React.Component {
             value={this.state.location}
           />
           <br />
-          <label htmlFor="images">image:</label>
+          <label htmlFor="images">Upload other images:</label>
           <input
             onChange={this.onImageChange}
             type="file"

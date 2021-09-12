@@ -21,21 +21,27 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router history={history}>
-        ARKHANE LONDON
-        <Header />
-        <Switch>
-          <Route exact path="/" component={AttractionsList} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/create" component={Create} />
-          <Route exact path="/attractions/search" component={Search} />
-          <Route exact path="/attractions/:id/edit" component={Edit} />
-          <Route exact path="/attractions/:id" component={AttractionDetails} />
-          <Route exact path="/myattractions" component={myAttractions} />
-          <Route path="*" component={() => <h2>PAGE NOT FOUND</h2>} />
-        </Switch>
-      </Router>
+      <div className='container'>
+        <Router  history={history}>
+          ARCANE LONDON
+          <Header />
+          <Switch>
+            <Route exact path="/" component={AttractionsList} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/create" component={Create} />
+            <Route exact path="/attractions/search" component={Search} />
+            <Route exact path="/attractions/:id/edit" component={Edit} />
+            <Route
+              exact
+              path="/attractions/:id"
+              component={AttractionDetails}
+            />
+            <Route exact path="/myattractions" component={myAttractions} />
+            <Route path="*" component={() => <h2>PAGE NOT FOUND</h2>} />
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }

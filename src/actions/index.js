@@ -1,5 +1,7 @@
-import axios from "axios";
 import history from "../history";
+import axios from "axios";
+
+require("dotenv").config();
 
 let instance = axios.create({
   baseURL: "http://localhost:3001",
@@ -56,11 +58,12 @@ export const createAttraction = (values) => {
 };
 
 export const editAttraction = (values) => {
-  let { name, location, description, images, _id } = values;
+  let { name, location, description, images, _id, deleteImages } = values;
   let fd = new FormData();
   fd.append("name", name);
   fd.append("description", description);
   fd.append("location", location);
+  fd.append("deleteImages", JSON.stringify(deleteImages));
   if (images) {
     for (let image of images) {
       fd.append("images", image);
@@ -202,6 +205,18 @@ export const isLoggedIn = () => {
     (async () => {
       let { data } = await instance.get("/loggedin");
       if (!data.isLoggedIn) dispatch({ type: "LOG_OUT" });
+    })();
+  };
+};
+
+export const getAdresses = (term) => {
+  return (dispatch) => {
+    (async () => {
+      let { data } = await axios.get(
+        `https://api.getaddress.io/autocomplete/${term}?expand=true&api-key=${process.env.REACT_APP_ADDRESS_API_KEY} `
+      );
+
+      dispatch({ type: "GET_ADDRESSES", payload: data.suggestions });
     })();
   };
 };

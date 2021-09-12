@@ -26,20 +26,28 @@ class AttractionsList extends React.Component {
       </ul>
     );
   };
+
+  renderGetAllButton = () => {
+    if (!this.attractions || this.attractions.length === 0) return "";
+    return (
+      <button
+        style={{ visibility: this.state.buttonVisibilty }}
+        onClick={() => {
+          this.props.getAllAttractions();
+          this.setState({ buttonVisibilty: "hidden" });
+        }}
+      >
+        Get All Attractions
+      </button>
+    );
+  };
+
   render() {
     return (
       <div>
         {this.renderAttractions()}
         <br />
-        <button
-          style={{ visibility: this.state.buttonVisibilty }}
-          onClick={() => {
-            this.props.getAllAttractions();
-            this.setState({ buttonVisibilty: "hidden" });
-          }}
-        >
-          Get All Attractions
-        </button>
+        {this.renderGetAllButton()}
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import history from "../history";
-
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Header from "./Header";
@@ -13,6 +13,9 @@ import Search from "./attractions/Search";
 import Edit from "./attractions/Edit";
 import { connect } from "react-redux";
 import { isLoggedIn } from "../actions";
+import AttractionsMap from "./attractions/AttractionsMap";
+import { Container } from "react-bootstrap";
+import "../styles.css";
 
 class App extends React.Component {
   componentDidMount() {
@@ -21,16 +24,16 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='container'>
-        <Router  history={history}>
-          ARCANE LONDON
-          <Header />
+      <Router history={history}>
+        <Header />
+        <Container>
           <Switch>
             <Route exact path="/" component={AttractionsList} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/create" component={Create} />
             <Route exact path="/attractions/search" component={Search} />
+            <Route exact path="/attractions/map" component={AttractionsMap} />
             <Route exact path="/attractions/:id/edit" component={Edit} />
             <Route
               exact
@@ -40,8 +43,8 @@ class App extends React.Component {
             <Route exact path="/myattractions" component={myAttractions} />
             <Route path="*" component={() => <h2>PAGE NOT FOUND</h2>} />
           </Switch>
-        </Router>
-      </div>
+        </Container>
+      </Router>
     );
   }
 }

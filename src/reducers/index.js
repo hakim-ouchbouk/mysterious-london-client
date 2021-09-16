@@ -3,10 +3,12 @@ import user from "./userReducer";
 import attractions from "./attractionsReducer";
 import attractionsSearch from "./attractionsSearchReducer";
 import addresses from "./addressesReducer";
+import AttractionCountReducer from "./AttractionCountReducer";
 
 export default combineReducers({
   user,
   attractions,
   attractionsSearchResults: attractionsSearch,
   addresses,
+  attractionsCount: AttractionCountReducer,
 });

@@ -9,8 +9,10 @@ import {
   addToBeenThere,
   addToList,
   deleteAttraction,
+  getUserAttractions,
 } from "../../actions";
 import { Link } from "react-router-dom";
+import {Button} from 'react-bootstrap'
 
 class AttractionDetails extends React.Component {
   state = {
@@ -20,33 +22,41 @@ class AttractionDetails extends React.Component {
 
   componentDidMount() {
     this.props.getAttraction(this.props.match.params.id);
+    if (this.props.user.loggedIn) this.props.getUserAttractions();
   }
 
   renderReviews = () => {
-    if (!this.props.attraction.reviews) return "";
-    return this.props.attraction.reviews.map(
-      ({ content, _id, stars, author }) => {
-        return (
-          <li key={_id}>
-            stars:{stars}
-            <br />
-            {content}
-            <br />
-            {this.props.user.loggedIn && this.props.user.id === author && (
-              <button
-                onClick={() => {
-                  this.props.deleteAttrationReview({
-                    attractionId: this.props.attraction._id,
-                    reviewId: _id,
-                  });
-                }}
-              >
-                delete
-              </button>
-            )}
-          </li>
-        );
-      }
+    if (this.props.attraction.reviews.length < 1) return "";
+    return (
+      <div>
+        <h3>Reviews:</h3>
+        <ul>
+          {this.props.attraction.reviews.map(
+            ({ content, _id, stars, author }) => {
+              return (
+                <li key={_id}>
+                  stars:{stars}
+                  <br />
+                  {content}
+                  <br />
+                  {this.props.user.loggedIn && this.props.user.id === author && (
+                    <Button
+                      onClick={() => {
+                        this.props.deleteAttrationReview({
+                          attractionId: this.props.attraction._id,
+                          reviewId: _id,
+                        });
+                      }}
+                    >
+                      delete
+                    </Button>
+                  )}
+                </li>
+              );
+            }
+          )}
+        </ul>
+      </div>
     );
   };
 
@@ -92,7 +102,7 @@ class AttractionDetails extends React.Component {
             cols="30"
             rows="10"
           ></textarea>
-          <button type="submit">Add Review</button>
+          <Button type="submit">Add Review</Button>
         </form>
       </div>
     );
@@ -105,13 +115,13 @@ class AttractionDetails extends React.Component {
     )
       return "";
     return (
-      <button
+      <Button variant='danger'
         onClick={() => {
           this.props.deleteAttraction(this.props.attraction._id);
         }}
       >
         Delete
-      </button>
+      </Button>
     );
   };
 
@@ -122,14 +132,14 @@ class AttractionDetails extends React.Component {
     )
       return "";
     return (
-      <button>
+      <Button variant='warning'>
         <Link
           style={{ textDecoration: "none", color: "black" }}
           to={`/attractions/${this.props.attraction._id}/edit`}
         >
           Edit
         </Link>
-      </button>
+      </Button>
     );
   };
 
@@ -137,34 +147,34 @@ class AttractionDetails extends React.Component {
     if (!this.props.user.loggedIn) return "";
     return (
       <div>
-        <button
+        <Button
           onClick={() => {
             this.props.addToWantToVisit(_id);
           }}
         >
           Want To go
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             this.props.addToBeenThere(_id);
           }}
         >
           Been There
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             this.props.addToList(_id);
           }}
         >
           Add To List
-        </button>
+        </Button>
       </div>
     );
   };
 
   renderImages = (images) => {
     if (images.length > 0) {
-      return images.map(({ url, public_id }) => {
+      return images.map(({ url, public_id }, i) => {
         return (
           <img
             key={public_id}
@@ -181,15 +191,25 @@ class AttractionDetails extends React.Component {
 
   renderAttraction = () => {
     if (this.props.attraction) {
-      let { name, description, images, location, _id, geocode } =
-        this.props.attraction;
+      let {
+        name,
+        description,
+        images,
+        location,
+        _id,
+        geocode,
+        visited,
+        wantToVisit,
+      } = this.props.attraction;
       return (
         <div>
-          <div>{this.renderImages(images  )}</div>
-          <br />
-          <Map location={location} geocode={geocode} />
-          <br />
           <h2> {name} </h2>
+          <div>{wantToVisit} want to visit</div>
+          <div>{visited} visited</div>
+          <div>{this.renderImages(images)}</div>
+          <br />
+          <Map geocode={geocode} />
+          <br />
           {this.renderButtons(_id)}
           {this.renderEditButton(_id)}
           {this.renderDeleteButton()}
@@ -198,8 +218,7 @@ class AttractionDetails extends React.Component {
           <br />
           <p>{description}</p>
           {this.renderAddReview()}
-          <h3>Reviews:</h3>
-          <ul>{this.renderReviews()}</ul>
+          {this.renderReviews()}
         </div>
       );
     } else {
@@ -224,5 +243,6 @@ export default connect(
     addToBeenThere,
     addToList,
     deleteAttraction,
+    getUserAttractions,
   }
 )(AttractionDetails);

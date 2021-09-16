@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createAttraction, getAdresses } from "../../actions";
 import _ from "lodash";
+import history from "../../history";
+
+import { createAttraction, getAdresses, isLoggedIn } from "../../actions";
+
+import validateAttraction from "../../validation/validateAttration";
 
 class Create extends React.Component {
   constructor(props) {
@@ -41,8 +45,15 @@ class Create extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.createAttraction(this.state);
-    this.setState({location:''})
+    let { name, location, description } = this.state;
+    if (!validateAttraction.validate({ name, location, description }).error && this.state.images) {
+      this.props.createAttraction(this.state);
+      this.setState({ location: "" });
+    } else {
+      
+      alert(validateAttraction.validate({ name, location, description }).error);
+      if(!this.state.images) alert('you must upload an image')
+    }
   };
 
   renderAdressDropdown = () => {
@@ -59,57 +70,62 @@ class Create extends React.Component {
     );
   };
 
-  render() {
+  renderForm() {
+    if (!this.props.user.loggedIn) {
+      history.push("/");
+    }
     return (
-      <div>
-        <form
-          autoComplete="off"
-          onSubmit={this.handleSubmit}
-          encType="multipart/form-data"
-        >
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            name="name"
-            onChange={this.onNameChange}
-            value={this.state.name}
-          />
-          <br />
-          <label htmlFor="description">Description:</label>
-          <textarea
-            name="description"
-            onChange={this.onDescriptionChange}
-            value={this.state.description}
-          />
-          <br />
-          <label htmlFor="location">Address:</label>
-          <input
-            type="text"
-            name="location"
-            onChange={this.onTermChange}
-            value={this.state.term}
-          />
-          <br />
-          {this.props.addresses.length > 0 && this.renderAdressDropdown()}
-          <br />
-          <label htmlFor="image">images:</label>
-          <input
-            onChange={this.onImageChange}
-            type="file"
-            name="images"
-            multiple
-          />
-          <br />
-          <button type="submit">Add Attraction</button>
-        </form>
-      </div>
+      <form
+        autoComplete="off"
+        onSubmit={this.handleSubmit}
+        encType="multipart/form-data"
+      >
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          name="name"
+          onChange={this.onNameChange}
+          value={this.state.name}
+        />
+        <br />
+        <label htmlFor="description">Description:</label>
+        <textarea
+          name="description"
+          onChange={this.onDescriptionChange}
+          value={this.state.description}
+        />
+        <br />
+        <label htmlFor="location">Address:</label>
+        <input
+          type="text"
+          name="location"
+          onChange={this.onTermChange}
+          value={this.state.term}
+        />
+        <br />
+        {this.props.addresses.length > 0 && this.renderAdressDropdown()}
+        <br />
+        <label htmlFor="image">images:</label>
+        <input
+          onChange={this.onImageChange}
+          type="file"
+          name="images"
+          multiple
+        />
+        <br />
+        <button type="submit">Add Attraction</button>
+      </form>
     );
+  }
+
+  render() {
+    return <div>{this.renderForm()}</div>;
   }
 }
 
 export default connect(
-  ({ addresses }) => {
-    return { addresses };
+  ({ addresses, user }) => {
+    return { addresses, user };
   },
-  { createAttraction, getAdresses }
+  { createAttraction, getAdresses, isLoggedIn }
 )(Create);

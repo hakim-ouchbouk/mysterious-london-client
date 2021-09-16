@@ -1,6 +1,7 @@
 import React from "react";
 import { login } from "../../actions";
 import { connect } from "react-redux";
+// import history from "../../history";
 
 class Login extends React.Component {
   state = {
@@ -22,6 +23,7 @@ class Login extends React.Component {
   };
 
   render() {
+    // if (this.props.user && this.props.user.loggedIn) return history.push("/");
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -48,4 +50,9 @@ class Login extends React.Component {
   }
 }
 
-export default connect(null, { login })(Login);
+export default connect(
+  ({ user }) => {
+    return { user };
+  },
+  { login }
+)(Login);

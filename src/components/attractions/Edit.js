@@ -1,25 +1,41 @@
 import React from "react";
 import { connect } from "react-redux";
-import { editAttraction, getAttraction } from "../../actions";
+import _ from "lodash";
+import { editAttraction, getAttraction, getAdresses } from "../../actions";
+import history from "../../history";
+import validateAttraction from "../../validation/validateAttration";
 
 class Edit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      description: "",
-      location: "",
+      name: null,
+      description: null,
+      location: null,
       images: null,
       deleteImages: [],
+      term: "",
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.name == null && nextProps.attraction) {
+      let { name, description, location } = nextProps.attraction;
+      return { name, description, location, term: location };
+    }
+    return null;
   }
 
   componentDidMount = () => {
     this.props.getAttraction(this.props.match.params.id);
-    setTimeout(() => {
-      let { name, description, location } = this.props.attraction;
-      this.setState({ name, description, location });
-    }, 300);
+  };
+
+  onTermChange = (e) => {
+    this.setState({ term: e.target.value });
+
+    _.debounce(() => {
+      this.props.getAdresses(this.state.term);
+    }, 400)();
   };
 
   onNameChange = (e) => {
@@ -41,22 +57,30 @@ class Edit extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let { _id } = this.props.attraction;
-    this.props.editAttraction({ ...this.state, _id });
+    let { name, location, description } = this.state;
+
+    if (!validateAttraction.validate({ name, location, description }).error) {
+      this.props.editAttraction({ ...this.state, _id });
+    } else {
+      alert(validateAttraction.validate(this.state).error);
+    }
+    this.setState({ location: "" });
+
   };
 
   renderImages = (images) => {
     if (images) {
-      return images.map((image, i) => {
+      return images.map((image) => {
         return (
           <img
             onClick={() => {
               let deleteImages = [...this.state.deleteImages];
-              let index = deleteImages.indexOf(image);
+              let index = deleteImages.indexOf(image.public_id);
               if (index < 0) {
-                deleteImages.push(image);
+                deleteImages.push(image.public_id);
                 this.setState({ deleteImages });
-              } else  {
-                deleteImages.splice(index,1)
+              } else {
+                deleteImages.splice(index, 1);
                 this.setState({ deleteImages });
               }
             }}
@@ -72,7 +96,27 @@ class Edit extends React.Component {
     return "";
   };
 
+  renderAdressDropdown = () => {
+    return (
+      <select onClick={this.onLocationChange}>
+        {this.props.addresses.map(({ address }, i) => {
+          return (
+            <option key={i} value={address}>
+              {address}
+            </option>
+          );
+        })}
+      </select>
+    );
+  };
+
   render() {
+    if (!this.props.user.loggedIn) {
+      history.push("/");
+    }
+
+    if (!this.props.attraction) return "loading...";
+
     return (
       <div>
         <form onSubmit={this.handleSubmit} encType="multipart/form-data">
@@ -98,14 +142,16 @@ class Edit extends React.Component {
             value={this.state.description}
           />
           <br />
-          <label htmlFor="location">Location:</label>
+          <label htmlFor="location">Address:</label>
           <input
             type="text"
             name="location"
-            onChange={this.onLocationChange}
-            value={this.state.location}
+            onChange={this.onTermChange}
+            value={this.state.term}
           />
           <br />
+          {this.props.addresses.length > 0 && this.renderAdressDropdown()}
+
           <label htmlFor="images">Upload other images:</label>
           <input
             onChange={this.onImageChange}
@@ -122,8 +168,12 @@ class Edit extends React.Component {
 }
 
 export default connect(
-  ({ attractions }, ownProps) => {
-    return { attraction: attractions[ownProps.match.params.id] };
+  ({ attractions, user, addresses }, ownProps) => {
+    return {
+      attraction: attractions[ownProps.match.params.id],
+      user,
+      addresses,
+    };
   },
-  { getAttraction, editAttraction }
+  { getAttraction, editAttraction, getAdresses }
 )(Edit);

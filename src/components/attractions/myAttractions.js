@@ -9,7 +9,11 @@ class MyAttractions extends React.Component {
     return (
       <ul>
         {list.map(({ name, _id }) => {
-          return <li key={_id}><Link to={`/attractions/${_id}`}>{name}</Link> </li>;
+          return (
+            <li key={_id}>
+              <Link to={`/attractions/${_id}`}>{name}</Link>{" "}
+            </li>
+          );
         })}
       </ul>
     );

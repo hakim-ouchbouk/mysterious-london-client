@@ -1,58 +1,102 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../actions";
+import { Navbar, Container, Nav } from "react-bootstrap";
+import { logout, googleAuth } from "../actions";
+
+import LoginGoogle from "./auth/LoginGoogle";
+import LogoutGoogle from "./auth/LogoutGoogle";
 
 class Header extends React.Component {
-  renderLogOut = () => {
-    if (!this.props.user.loggedIn) return "";
-    return (
-      <button
-        onClick={() => {
-          this.props.logout();
-        }}
-      >
-        Log out
-      </button>
-    );
+  // renderLogOut = () => {
+  //   if (!this.props.user.loggedIn || this.props.user.oauth) return;
+  //   return (
+  //     <span
+  //       onClick={() => {
+  //         this.props.logout();
+  //       }}
+  //     >
+  //       Log out
+  //     </span>
+  //   );
+  // };
+
+  renderGoogleLogout = () => {
+    if (!this.props.user.loggedIn || !this.props.user.oauth) return "";
+    return <LogoutGoogle />;
+  };
+
+  renderGoogleLogin = () => {
+    if (this.props.user.loggedIn) return "";
+    return <LoginGoogle />;
   };
 
   render() {
     return (
-      <div>
-        <br />
-        {this.props.user && this.props.user.username}
-        <br />
-        <Link to="/">Attractions</Link>
-        <br />
-        {!this.props.user.loggedIn && (
-          <Link to="/register">
-            Register <br />
-          </Link>
-        )}
+      <Navbar bg="light" expand="lg">
+        <Container style={{ textDecoration: "none" }}>
+          <Navbar.Brand as={Link} to="/">
+            Arcane London
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link as={Link} to="/">
+                Attractions
+              </Nav.Link>
+              <Nav.Link as={Link} to="/attractions/map">
+                Map
+              </Nav.Link>
+              {!this.props.user.loggedIn && (
+                <Nav.Link as={Link} to="/register">
+                  Register
+                </Nav.Link>
+              )}
+              {this.props.user.loggedIn && (
+                <Nav.Link as={Link} to="/create">
+                  Add Attraction
+                </Nav.Link>
+              )}
+              {this.props.user.loggedIn && (
+                <Nav.Link as={Link} to="/myattractions">
+                  My Attractions
+                </Nav.Link>
+              )}
+              <Nav.Link as={Link} to="/attractions/search">
+                Search
+              </Nav.Link>
+              {this.props.user && this.props.user.username && (
+                <Nav.Link>{this.props.user.username}</Nav.Link>
+              )}
+              {this.props.user.loggedIn && !this.props.user.oauth && (
+                <Nav.Link
+                  onClick={() => {
+                    this.props.logout();
+                  }}
+                >
+                  Logout
+                </Nav.Link>
+              )}
+              {!this.props.user.loggedIn && (
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+              )}
 
-        {!this.props.user.loggedIn && (
-          <Link to="/login">
-            Login
-            <br />
-          </Link>
-        )}
-
-        {this.props.user.loggedIn && (
-          <Link to="/create">
-            Add Attraction
-            <br />
-          </Link>
-        )}
-
-        {this.props.user.loggedIn && (
-          <Link to="/myattractions">My Attractions<br /></Link>
-        )}
-        
-        <Link to="/attractions/search">Search<br /></Link>
-        
-        {this.renderLogOut()}
-      </div>
+              {!this.props.user.loggedIn && (
+                <Nav.Link>
+                  <LoginGoogle />
+                </Nav.Link>
+              )}
+              {this.props.user.loggedIn && this.props.user.oauth && (
+                <Nav.Link>
+                  <LogoutGoogle />
+                </Nav.Link>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     );
   }
 }
@@ -61,5 +105,5 @@ export default connect(
   ({ user }) => {
     return { user };
   },
-  { logout }
+  { logout, googleAuth }
 )(Header);

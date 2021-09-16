@@ -1,11 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { register } from "../../actions";
+import registerValidation from "../../validation/validateUser";
 
 class Register extends React.Component {
   state = {
     username: "",
     password: "",
+    email: "",
   };
 
   usernameChange = (e) => {
@@ -16,15 +18,32 @@ class Register extends React.Component {
     this.setState({ password: e.target.value });
   };
 
+  emailChange = (e) => {
+    this.setState({ email: e.target.value });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.register(this.state);
+    console.log(registerValidation.validate(this.state));
+    if (!registerValidation.validate(this.state).error) {
+      this.props.register(this.state);
+    } else {
+      alert("WRONG INPUT");
+    }
   };
 
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
+          <label htmlFor="username">Email:</label>
+          <input
+            value={this.state.email}
+            onChange={this.emailChange}
+            name="email"
+            type="text"
+          />
+          <br />
           <label htmlFor="username">Username:</label>
           <input
             value={this.state.username}

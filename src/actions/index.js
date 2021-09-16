@@ -153,8 +153,10 @@ export const addToBeenThere = (attractionId) => {
       let { data } = await instance.post(
         `/attractions/${attractionId}/beenthere`
       );
-      if (data !== "ALREADY ADDED")
+      if (data !== "ALREADY ADDED") {
+        dispatch(getAttraction(attractionId));
         dispatch({ type: "UPDATE_USER_LIST", payload: data });
+      }
     })();
   };
 };
@@ -165,8 +167,10 @@ export const addToWantToVisit = (attractionId) => {
       let { data } = await instance.post(
         `/attractions/${attractionId}/wanttovist`
       );
-      if (data !== "ALREADY ADDED")
+      if (data !== "ALREADY ADDED") {
+        dispatch(getAttraction(attractionId));
         dispatch({ type: "UPDATE_USER_LIST", payload: data });
+      }
     })();
   };
 };
@@ -217,6 +221,25 @@ export const getAdresses = (term) => {
       );
 
       dispatch({ type: "GET_ADDRESSES", payload: data.suggestions });
+    })();
+  };
+};
+
+export const googleAuth = (token) => {
+  return (dispatch) => {
+    (async () => {
+      let { data } = await instance.post("/oauth", { token });
+      dispatch({ type: "LOG_IN", payload: data });
+    })();
+  };
+};
+
+export const getAttractionCount = () => {
+  return (dispatch) => {
+    (async () => {
+      let { data } = await instance.get("/attractions/count");
+
+      dispatch({ type: "GET_ATTRACTION_COUNT", payload: data.count });
     })();
   };
 };

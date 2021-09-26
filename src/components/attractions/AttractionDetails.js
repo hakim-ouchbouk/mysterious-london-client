@@ -12,7 +12,9 @@ import {
   getUserAttractions,
 } from "../../actions";
 import { Link } from "react-router-dom";
-import {Button} from 'react-bootstrap'
+import { Button } from "react-bootstrap";
+
+import validateReview from "../../validation/validateReview";
 
 class AttractionDetails extends React.Component {
   state = {
@@ -27,6 +29,7 @@ class AttractionDetails extends React.Component {
 
   renderReviews = () => {
     if (this.props.attraction.reviews.length < 1) return "";
+
     return (
       <div>
         <h3>Reviews:</h3>
@@ -35,11 +38,13 @@ class AttractionDetails extends React.Component {
             ({ content, _id, stars, author }) => {
               return (
                 <li key={_id}>
+                  {author.username}
+                  <br />
                   stars:{stars}
                   <br />
                   {content}
                   <br />
-                  {this.props.user.loggedIn && this.props.user.id === author && (
+                  {this.props.user.loggedIn && this.props.user.id === author._id && (
                     <Button
                       onClick={() => {
                         this.props.deleteAttrationReview({
@@ -65,12 +70,16 @@ class AttractionDetails extends React.Component {
       e.preventDefault();
       let attractionId = this.props.attraction._id;
 
-      this.props.addAttractionReview({
-        attractionId,
-        content: this.state.review,
-        stars: this.state.stars,
-      });
-      this.setState({ review: "" });
+      if (!validateReview.validate({ content: this.state.review }).error) {
+        this.props.addAttractionReview({
+          attractionId,
+          content: this.state.review,
+          stars: this.state.stars,
+        });
+        this.setState({ review: "" });
+      } else {
+        alert(validateReview.validate({ content: this.state.review }).error);
+      }
     };
 
     if (!this.props.user.loggedIn) return "";
@@ -115,7 +124,8 @@ class AttractionDetails extends React.Component {
     )
       return "";
     return (
-      <Button variant='danger'
+      <Button
+        variant="danger"
         onClick={() => {
           this.props.deleteAttraction(this.props.attraction._id);
         }}
@@ -132,7 +142,7 @@ class AttractionDetails extends React.Component {
     )
       return "";
     return (
-      <Button variant='warning'>
+      <Button variant="warning">
         <Link
           style={{ textDecoration: "none", color: "black" }}
           to={`/attractions/${this.props.attraction._id}/edit`}

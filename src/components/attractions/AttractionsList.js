@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import _ from "lodash";
 
 import {
@@ -23,50 +22,25 @@ class AttractionsList extends React.Component {
   renderAttractions = () => {
     if (!this.props.attractions) return "";
     return (
-      <Container className="mt-5" fluid>
-        <Row>
-          {this.props.attractions.map(({ name, _id, images, description }) => {
-            return (
-              <Col className="mb-4" key={_id}>
-                <Card style={{ width: "14rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src={images[0].url}
-                    style={{ height: "200px" }}
-                  />
-                  <Card.Body>
-                    <Card.Title>{name}</Card.Title>
-                    <Card.Text>{description.substring(0, 100)}</Card.Text>
-                    <Button variant="primary">
-                      <Link
-                        style={{ color: "white", textDecoration: "none" }}
-                        to={`/attractions/${_id}`}
-                      >
-                        Read More..
-                      </Link>
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-        <Row>
-            {this.renderGetAllButton()}
-        </Row>
-      </Container>
+      <ul>
+        {this.props.attractions.map(({ name, _id }) => {
+          return (
+            <li key={_id}>{<Link to={`/attractions/${_id}`}>{name}</Link>}</li>
+          );
+        })}
+      </ul>
     );
   };
 
   renderGetAllButton = () => {
-    // if (
-    //   !this.props.attractions ||
-    //   this.props.count <= 3 ||
-    //   this.props.attractions.length > 3
-    // )
-    //   return "";
+    if (
+      !this.props.attractions ||
+      this.props.count <= 3 ||
+      this.props.attractions.length > 3
+    )
+      return "";
     return (
-      <Button className='col mb-5 text-center'
+      <button
         style={{ visibility: this.state.buttonVisibilty }}
         onClick={() => {
           this.props.getAllAttractions();
@@ -74,7 +48,7 @@ class AttractionsList extends React.Component {
         }}
       >
         See All {this.props.count} Attractions
-      </Button>
+      </button>
     );
   };
 
@@ -82,6 +56,8 @@ class AttractionsList extends React.Component {
     return (
       <div>
         {this.renderAttractions()}
+        <br />
+        {this.renderGetAllButton()}
       </div>
     );
   }

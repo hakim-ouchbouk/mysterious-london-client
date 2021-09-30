@@ -3,7 +3,16 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import { searchAttractions } from "../../actions";
+import {
+  Container as ResultsWrapper,
+  AttractionCard,
+  AttractionImg,
+  CardContent,
+  CenterText,
+} from "../styledComponents/attractionsList";
 
+import { MainContainer } from "../styledComponents/general";
+import { Input, Title } from "../styledComponents/search";
 
 class Search extends React.Component {
   state = {
@@ -17,35 +26,49 @@ class Search extends React.Component {
     }, 300)();
   };
 
-  renderResults = () => {
-    if (!this.props.attractionsSearchResults) return "";
-    let results = this.props.attractionsSearchResults;
+  renderAttractions = () => {
+    if (!this.props.attractions) return "";
     return (
-      <ul>
-        {results.map(({ name, _id }) => {
-          return <li key={_id}><Link to={`/attractions/${_id}`}>{name}</Link> </li>;
+      <ResultsWrapper>
+        {this.props.attractions.map(({ name, description, _id, images }) => {
+          return (
+            <AttractionCard key={_id}>
+              <Link className="link" to={`/attractions/${_id}`}>
+                <AttractionImg src={images[0].url} alt="pic" />
+                <CardContent>
+                  {<p className="name">{name}</p>}
+                  <p className="subtitle">{description.substring(0, 101)}...</p>
+                </CardContent>
+              </Link>
+            </AttractionCard>
+          );
         })}
-      </ul>
+      </ResultsWrapper>
     );
   };
 
   render() {
     return (
-      <div>
-        <input
+      <MainContainer>
+        <CenterText>
+          <Title>Search</Title>
+        </CenterText>
+
+        <Input
           onChange={this.onQueryChange}
           value={this.state.query}
           type="text"
+          placeholder="Search for destinations"
         />
-        <div>{this.renderResults()}</div>
-      </div>
+        <div>{this.renderAttractions()}</div>
+      </MainContainer>
     );
   }
 }
 
 export default connect(
   ({ attractionsSearchResults }) => {
-    return { attractionsSearchResults: _.values(attractionsSearchResults) };
+    return { attractions: _.values(attractionsSearchResults) };
   },
   { searchAttractions }
 )(Search);

@@ -59,15 +59,15 @@ class Header extends React.Component {
               )}
               {this.props.user.loggedIn && (
                 <Nav.Link as={Link} to="/myattractions">
-                  My Attractions
+                  {this.props.user.username}
                 </Nav.Link>
               )}
               <Nav.Link as={Link} to="/attractions/search">
                 Search
               </Nav.Link>
-              {this.props.user && this.props.user.username && (
+              {/* {this.props.user && this.props.user.username && (
                 <Nav.Link>{this.props.user.username}</Nav.Link>
-              )}
+              )} */}
               {this.props.user.loggedIn && !this.props.user.oauth && (
                 <Nav.Link
                   onClick={() => {

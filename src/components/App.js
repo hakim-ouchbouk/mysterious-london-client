@@ -14,8 +14,9 @@ import Edit from "./attractions/Edit";
 import { connect } from "react-redux";
 import { isLoggedIn } from "../actions";
 import AttractionsMap from "./attractions/AttractionsMap";
-import { Container } from "react-bootstrap";
-import "../styles.css";
+import GlobalStyles from "../styles/GlobalStyles";
+
+
 
 class App extends React.Component {
   componentDidMount() {
@@ -25,8 +26,8 @@ class App extends React.Component {
   render() {
     return (
       <Router history={history}>
+        <GlobalStyles />
         <Header />
-        <Container>
           <Switch>
             <Route exact path="/" component={AttractionsList} />
             <Route exact path="/register" component={Register} />
@@ -43,7 +44,6 @@ class App extends React.Component {
             <Route exact path="/myattractions" component={myAttractions} />
             <Route path="*" component={() => <h2>PAGE NOT FOUND</h2>} />
           </Switch>
-        </Container>
       </Router>
     );
   }

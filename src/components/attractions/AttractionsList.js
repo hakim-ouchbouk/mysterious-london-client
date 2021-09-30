@@ -2,6 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import _ from "lodash";
+import {
+  Container,
+  AttractionCard,
+  AttractionImg,
+  CardContent,
+  CenterButton,
+  Button,
+  CenterText,
+  Title
+} from "../styledComponents/attractionsList";
 
 import {
   getAttractions,
@@ -22,25 +32,33 @@ class AttractionsList extends React.Component {
   renderAttractions = () => {
     if (!this.props.attractions) return "";
     return (
-      <ul>
-        {this.props.attractions.map(({ name, _id }) => {
+      <Container>
+        {this.props.attractions.map(({ name, description, _id, images }) => {
           return (
-            <li key={_id}>{<Link to={`/attractions/${_id}`}>{name}</Link>}</li>
+            <AttractionCard key={_id}>
+              <Link className="link" to={`/attractions/${_id}`}>
+                <AttractionImg src={images[0].url} alt="pic" />
+                <CardContent>
+                  {<p className="name">{name}</p>}
+                  <p className="subtitle">{description.substring(0, 101)}...</p>
+                </CardContent>
+              </Link>
+            </AttractionCard>
           );
         })}
-      </ul>
+      </Container>
     );
   };
 
   renderGetAllButton = () => {
     if (
       !this.props.attractions ||
-      this.props.count <= 3 ||
-      this.props.attractions.length > 3
+      this.props.count <= 8 ||
+      this.props.attractions.length > 8
     )
       return "";
     return (
-      <button
+      <Button
         style={{ visibility: this.state.buttonVisibilty }}
         onClick={() => {
           this.props.getAllAttractions();
@@ -48,16 +66,19 @@ class AttractionsList extends React.Component {
         }}
       >
         See All {this.props.count} Attractions
-      </button>
+      </Button>
     );
   };
 
   render() {
     return (
       <div>
+        <CenterText>
+          <Title>All the places in London</Title>
+        </CenterText>
         {this.renderAttractions()}
         <br />
-        {this.renderGetAllButton()}
+        <CenterButton>{this.renderGetAllButton()}</CenterButton>
       </div>
     );
   }

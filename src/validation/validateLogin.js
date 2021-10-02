@@ -1,18 +1,11 @@
 import Joi from "joi";
 
-
 export const validateUsername = Joi.object({
   username: Joi.string()
     .pattern(new RegExp("^[A-Za-z0-9_-]*$"))
     .message({ "string.pattern.base": "Invalid username" })
     .min(5)
     .max(30)
-    .required(),
-});
-
-export const validateEmail = Joi.object({
-  email: Joi.string()
-    .email({ tlds: { allow: false } })
     .required(),
 });
 

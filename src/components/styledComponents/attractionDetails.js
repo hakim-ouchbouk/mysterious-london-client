@@ -69,7 +69,6 @@ export const ImgsContainer = styled.div`
   gap: 10px;
   margin-bottom: 50px;
   position: relative;
-
 `;
 
 export const Img = styled.img`
@@ -121,7 +120,6 @@ export const Description = styled.p`
   color: #111827;
   margin-bottom: 48px;
   word-break: break-all;
-
 `;
 
 export const MapContainer = styled.div`
@@ -135,8 +133,7 @@ export const AddReview = styled.div`
 `;
 
 export const TextArea = styled.textarea`
-  background-color: #F9FAFB
-;
+  background-color: #f9fafb;
   width: 100%;
   display: block;
   margin-bottom: 12px;
@@ -225,4 +222,37 @@ export const Edit = styled.button`
 export const Label = styled.p`
   font-size: 25px;
   font-weight: bold;
+`;
+
+export const LoginButton = styled.button`
+  padding: 12px;
+  border: none;
+  background-color: #065f46;
+  transition: all 0.3s;
+  margin-right: 30px;
+  margin-left: 10px;
+  .link {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &:hover {
+    background-color: #064e3b;
+  }
+`;
+
+export const RegisterButton = styled.button`
+  padding: 12px;
+  border: none;
+  background-color: #D1FAE5;
+  transition: all 0.3s;
+
+  .link {
+    color:  #064E3B;
+    text-decoration: none;
+  }
+
+  &:hover {
+    background-color: #A7F3D0;
+  }
 `;

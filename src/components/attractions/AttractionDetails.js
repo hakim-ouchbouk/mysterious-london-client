@@ -32,8 +32,10 @@ import {
   Label,
   LeftBtn,
   List,
+  LoginButton,
   MapContainer,
   Rating,
+  RegisterButton,
   Review,
   ReviewButton,
   Reviews,
@@ -46,6 +48,7 @@ import {
 } from "../styledComponents/attractionDetails";
 import validateReview from "../../validation/validateReview";
 import { MainContainer } from "../styledComponents/general";
+import history from "../../history";
 
 class AttractionDetails extends React.Component {
   constructor(props) {
@@ -114,6 +117,23 @@ class AttractionDetails extends React.Component {
   };
 
   renderAddReview = () => {
+    if (!this.props.user.loggedIn) {
+      return (
+        <div>
+          <Label>Log in or register to leave a review</Label>
+
+          <LoginButton>
+            <Link className="link" to="/login">
+              Login
+            </Link>
+          </LoginButton>
+          <RegisterButton>
+            <Link className="link" to="/register">Register</Link>
+          </RegisterButton>
+        </div>
+      );
+    }
+
     let handleSubmitReview = (e) => {
       e.preventDefault();
       let attractionId = this.props.attraction._id;
@@ -129,8 +149,6 @@ class AttractionDetails extends React.Component {
         alert(validateReview.validate({ content: this.state.review }).error);
       }
     };
-
-    if (!this.props.user.loggedIn) return "";
 
     return (
       <div>
@@ -204,10 +222,13 @@ class AttractionDetails extends React.Component {
   };
 
   renderButtons = (_id) => {
-    if (!this.props.user.loggedIn) return "";
     let { visited, wantToVisit } = this.props.attraction;
     return (
-      <div>
+      <div
+        onClick={() => {
+          if (!this.props.user.loggedIn) history.push("/login");
+        }}
+      >
         <Btn
           onClick={() => {
             this.props.addToWantToVisit(_id);
@@ -248,7 +269,6 @@ class AttractionDetails extends React.Component {
     return "";
   };
   sideScroll = (element, speed, distance, step) => {
-    console.log(element.scrollWidth);
     let scrollAmount = 0;
     const slideTimer = setInterval(() => {
       element.scrollLeft += step;

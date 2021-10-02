@@ -13,7 +13,7 @@ function Logout({ logout }) {
       <GoogleLogout
         render={(renderProps) => (
           <span onClick={renderProps.onClick}>
-            <i className="fab fa-google"></i> Logout
+             Logout
           </span>
         )}
         clientId={process.env.REACT_APP_CLIENT_ID}

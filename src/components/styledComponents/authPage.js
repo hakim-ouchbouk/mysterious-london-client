@@ -25,7 +25,7 @@ export const Input = styled.input`
   width: 100%;
   height: 52px;
   margin: 12px 0;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   font-family: inherit;
   outline: none;
   border: none;
@@ -47,8 +47,23 @@ export const Button = styled.button`
   border: none;
   font-size: 25px;
   transition: all 300ms;
+  margin-top: 18px;
   &:hover {
     background-color: #064e3b;
+  }
+`;
+
+export const GoogleButton = styled.button`
+  width: 100%;
+  height: 52px;
+  color: white;
+  margin-top: 20px;
+  background-color: #de5246;
+  border: none;
+  font-size: 25px;
+  transition: all 300ms;
+  &:hover {
+    background-color: #b91c1c;
   }
 `;
 
@@ -60,4 +75,9 @@ export const Title = styled.h1`
 
 export const CenterText = styled.div`
   text-align: center;
+`;
+
+export const Error = styled.p`
+  color: red;
+  font-size: 16px;
 `;

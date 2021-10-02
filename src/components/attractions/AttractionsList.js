@@ -18,6 +18,7 @@ import {
   getAllAttractions,
   getAttractionCount,
 } from "../../actions";
+import { MainContainer } from "../styledComponents/general";
 
 class AttractionsList extends React.Component {
   state = {
@@ -32,6 +33,7 @@ class AttractionsList extends React.Component {
   renderAttractions = () => {
     if (!this.props.attractions) return "";
     return (
+      
       <Container>
         {this.props.attractions.map(({ name, description, _id, images }) => {
           return (
@@ -72,14 +74,14 @@ class AttractionsList extends React.Component {
 
   render() {
     return (
-      <div>
+      <MainContainer>
         <CenterText>
           <Title>All the places in London</Title>
         </CenterText>
         {this.renderAttractions()}
         <br />
         <CenterButton>{this.renderGetAllButton()}</CenterButton>
-      </div>
+      </MainContainer>
     );
   }
 }

@@ -230,6 +230,8 @@ export const googleAuth = (token) => {
     (async () => {
       let { data } = await instance.post("/oauth", { token });
       dispatch({ type: "LOG_IN", payload: data });
+      if (history.action !== "POP") history.goBack();
+      else history.push("/");
     })();
   };
 };

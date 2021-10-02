@@ -36,7 +36,8 @@ export const Input = styled.input`
 
 export const Label = styled.label`
   color: #212529;
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: bold;
 `;
 
 export const Button = styled.button`
@@ -70,6 +71,7 @@ export const TextArea = styled.textarea`
   margin: 12px 0;
   margin-bottom: 30px;
   padding: 12px;
+  line-height: 1.3;
   /* border-radius: 10px; */
   background-color: #f3f4f6;
 `;

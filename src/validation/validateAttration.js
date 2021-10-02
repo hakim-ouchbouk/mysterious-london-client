@@ -1,9 +1,13 @@
 import Joi from "joi";
 
-const schema = Joi.object({
+export const validateName = Joi.object({
   name: Joi.string().min(3).max(50).required(),
-  description: Joi.string().min(20).required(),
-  location: Joi.string().required(),
 });
 
-export default schema;
+export const validateDescription = Joi.object({
+  description: Joi.string().min(20).required(),
+});
+
+export const validateLocation = Joi.object({
+  location: Joi.string().required(),
+});

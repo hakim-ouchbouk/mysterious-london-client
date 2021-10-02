@@ -2,37 +2,59 @@ import React from "react";
 import { connect } from "react-redux";
 import { getUserAttractions } from "../../actions";
 import { Link } from "react-router-dom";
+import { MainContainer } from "../styledComponents/general";
+import history from "../../history";
+
+import {
+  Container as ListWrapper,
+  AttractionCard,
+  AttractionImg,
+  CardContent,
+  Title,
+} from "../styledComponents/attractionsList";
 
 class MyAttractions extends React.Component {
-  renderList = (list) => {
-    if (!list) return "";
-    return (
-      <ul>
-        {list.map(({ name, _id }) => {
-          return (
-            <li key={_id}>
-              <Link to={`/attractions/${_id}`}>{name}</Link>{" "}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  };
-
   componentDidMount() {
     this.props.getUserAttractions();
   }
 
-  render() {
+  renderAttractions = (attractions) => {
+    if (!attractions || attractions.length === 0) {
+      return <p style={{fontSize:'25px'}}>Nothing yet</p>;
+    }
     return (
-      <div>
-        <h3>Want To Visit</h3>
-        {this.renderList(this.props.user.wantToVisit)}
-        <h3>Been There</h3>
-        {this.renderList(this.props.user.beenThere)}
-        <h3>List</h3>
-        {this.renderList(this.props.user.list)}
-      </div>
+      <ListWrapper>
+        {attractions.map(({ name, description, _id, images }) => {
+          return (
+            <AttractionCard key={_id}>
+              <Link className="link" to={`/attractions/${_id}`}>
+                <AttractionImg src={images[0].url} alt="pic" />
+                <CardContent>
+                  {<p className="name">{name}</p>}
+                  <p className="subtitle">{description.substring(0, 101)}...</p>
+                </CardContent>
+              </Link>
+            </AttractionCard>
+          );
+        })}
+      </ListWrapper>
+    );
+  };
+
+  render() {
+    if (!this.props.user.loggedIn) {
+      history.push("/");
+    }
+
+    return (
+      <MainContainer>
+        <Title>Places Where You Want To Go</Title>
+        {this.renderAttractions(this.props.user.wantToVisit)}
+        <Title>Places Where You've been</Title>
+        {this.renderAttractions(this.props.user.beenThere)}
+        <Title>Your List List</Title>
+        {this.renderAttractions(this.props.user.list)}
+      </MainContainer>
     );
   }
 }

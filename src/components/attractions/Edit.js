@@ -5,6 +5,17 @@ import { editAttraction, getAttraction, getAdresses } from "../../actions";
 import history from "../../history";
 import validateAttraction from "../../validation/validateAttration";
 
+import {
+  Input,
+  Label,
+  Container,
+  Button,
+  TextArea,
+  Select,
+  CenterText,
+  Title,
+} from "../styledComponents/createAttraction";
+
 class Edit extends React.Component {
   constructor(props) {
     super(props);
@@ -65,7 +76,6 @@ class Edit extends React.Component {
       alert(validateAttraction.validate(this.state).error);
     }
     this.setState({ location: "" });
-
   };
 
   renderImages = (images) => {
@@ -87,7 +97,16 @@ class Edit extends React.Component {
             key={image.public_id}
             src={image.url}
             alt={image.public_id}
-            style={{ width: "200px", height: "200px" }}
+            style={{
+              width: "100px",
+              height: "auto",
+              marginRight: "10px",
+              opacity: `${
+                this.state.deleteImages.indexOf(image.public_id) < 0
+                  ? ""
+                  : "0.3"
+              }`,
+            }}
           />
         );
       });
@@ -98,7 +117,7 @@ class Edit extends React.Component {
 
   renderAdressDropdown = () => {
     return (
-      <select onClick={this.onLocationChange}>
+      <Select onClick={this.onLocationChange}>
         {this.props.addresses.map(({ address }, i) => {
           return (
             <option key={i} value={address}>
@@ -106,7 +125,7 @@ class Edit extends React.Component {
             </option>
           );
         })}
-      </select>
+      </Select>
     );
   };
 
@@ -119,49 +138,64 @@ class Edit extends React.Component {
 
     return (
       <div>
-        <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-          <div>
-            Select To Delete Images:
+        <CenterText>
+          <Title>Edit Attraction</Title>
+        </CenterText>
+        <Container style={{ width: "50%", marginBottom: "50px" }}>
+          <form onSubmit={this.handleSubmit} encType="multipart/form-data">
             <div>
-              {this.props.attraction &&
-                this.renderImages(this.props.attraction.images)}
+              <Label style={{ marginBottom: "20px" }}>
+                Select To Delete Images:
+              </Label>
+              <div>
+                {this.props.attraction &&
+                  this.renderImages(this.props.attraction.images)}
+              </div>
             </div>
-          </div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            name="name"
-            onChange={this.onNameChange}
-            value={this.state.name}
-          />
-          <br />
-          <label htmlFor="description">Description:</label>
-          <textarea
-            name="description"
-            onChange={this.onDescriptionChange}
-            value={this.state.description}
-          />
-          <br />
-          <label htmlFor="location">Address:</label>
-          <input
-            type="text"
-            name="location"
-            onChange={this.onTermChange}
-            value={this.state.term}
-          />
-          <br />
-          {this.props.addresses.length > 0 && this.renderAdressDropdown()}
+            <div>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                type="text"
+                name="name"
+                onChange={this.onNameChange}
+                value={this.state.name}
+                autoComplete="off"
+              />
+            </div>
 
-          <label htmlFor="images">Upload other images:</label>
-          <input
-            onChange={this.onImageChange}
-            type="file"
-            name="images"
-            multiple
-          />
-          <br />
-          <button type="submit">Edit Attraction</button>
-        </form>
+            <div>
+              <Label htmlFor="description">Description</Label>
+              <TextArea
+                name="description"
+                onChange={this.onDescriptionChange}
+                value={this.state.description}
+              />
+            </div>
+            <div>
+              <Label htmlFor="location">Address</Label>
+              <Input
+                type="text"
+                name="location"
+                onChange={this.onTermChange}
+                value={this.state.term}
+                autoComplete="off"
+              />
+            </div>
+            {this.props.addresses.length > 0 && this.renderAdressDropdown()}
+
+            <div>
+              <Label htmlFor="image">Upload images</Label>
+              <Input
+                style={{ backgroundColor: "white" }}
+                onChange={this.onImageChange}
+                type="file"
+                name="images"
+                multiple
+              />
+            </div>
+            <Button type="submit">Edit Attraction</Button>
+          </form>
+        </Container>
       </div>
     );
   }

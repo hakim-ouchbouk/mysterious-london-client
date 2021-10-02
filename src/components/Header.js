@@ -4,31 +4,14 @@ import { Link } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { logout, googleAuth } from "../actions";
 
-import LoginGoogle from "./auth/LoginGoogle";
 import LogoutGoogle from "./auth/LogoutGoogle";
 
 class Header extends React.Component {
-  // renderLogOut = () => {
-  //   if (!this.props.user.loggedIn || this.props.user.oauth) return;
-  //   return (
-  //     <span
-  //       onClick={() => {
-  //         this.props.logout();
-  //       }}
-  //     >
-  //       Log out
-  //     </span>
-  //   );
-  // };
+
 
   renderGoogleLogout = () => {
     if (!this.props.user.loggedIn || !this.props.user.oauth) return "";
     return <LogoutGoogle />;
-  };
-
-  renderGoogleLogin = () => {
-    if (this.props.user.loggedIn) return "";
-    return <LoginGoogle />;
   };
 
   render() {
@@ -83,11 +66,18 @@ class Header extends React.Component {
                 </Nav.Link>
               )}
 
-              {!this.props.user.loggedIn && (
+              {/* {!this.props.user.loggedIn && (
                 <Nav.Link>
-                  <LoginGoogle />
+                  <LoginGoogle
+                    text={
+                      <p>
+                        Login with <IoLogoGoogle />
+                      </p>
+                    }
+                  />
                 </Nav.Link>
-              )}
+              )} */}
+
               {this.props.user.loggedIn && this.props.user.oauth && (
                 <Nav.Link>
                   <LogoutGoogle />

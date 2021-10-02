@@ -3,7 +3,7 @@ import { GoogleLogin } from "react-google-login";
 import { connect } from "react-redux";
 import { googleAuth } from "../../actions";
 
-function Login({ googleAuth }) {
+function Login({ googleAuth,text }) {
   const onSuccess = (res) => {
     googleAuth(res.tokenId);
   };
@@ -17,7 +17,7 @@ function Login({ googleAuth }) {
       <GoogleLogin
         render={(renderProps) => (
           <span onClick={renderProps.onClick}>
-            <i className="fab fa-google"></i> 
+           {text}
           </span>
         )}
         clientId={process.env.REACT_APP_CLIENT_ID}

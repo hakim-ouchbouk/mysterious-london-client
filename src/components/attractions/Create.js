@@ -25,6 +25,10 @@ class Create extends React.Component {
       location: "",
       images: null,
       term: "",
+      nameError: "",
+      descriptionError: "",
+      locationError: "",
+      imagesError: "",
     };
   }
 
@@ -126,7 +130,7 @@ class Create extends React.Component {
             <div>
               <Label htmlFor="image">Upload images</Label>
               <Input
-              style={{backgroundColor:"white"}}
+                style={{ backgroundColor: "white" }}
                 onChange={this.onImageChange}
                 type="file"
                 name="images"

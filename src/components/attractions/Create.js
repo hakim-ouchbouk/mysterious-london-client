@@ -1,9 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import _ from "lodash";
 import history from "../../history";
 import { createAttraction, getAdresses, isLoggedIn } from "../../actions";
-import validateAttraction from "../../validation/validateAttration";
+import _ from "lodash";
+import {
+  validateName,
+  validateDescription,
+  validateLocation,
+} from "../../validation/validateAttration";
 import {
   Input,
   Label,
@@ -15,6 +19,7 @@ import {
   Title,
 } from "../styledComponents/createAttraction";
 import { MainContainer } from "../styledComponents/general";
+import { Error } from "../styledComponents/authPage";
 
 class Create extends React.Component {
   constructor(props) {
@@ -45,6 +50,11 @@ class Create extends React.Component {
 
     _.debounce(() => {
       this.props.getAdresses(this.state.term);
+      if (this.props.addresses.length === 0) {
+        this.setState({ locationError: "It must be a valid UK address" });
+      } else {
+        this.setState({ locationError: "" });
+      }
     }, 400)();
   };
 
@@ -54,20 +64,54 @@ class Create extends React.Component {
 
   onImageChange = (e) => {
     this.setState({ images: e.target.files });
+    this.setState({
+      imagesError: "",
+    });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    let { name, location, description } = this.state;
-    if (
-      !validateAttraction.validate({ name, location, description }).error &&
-      this.state.images
-    ) {
+    let nameError = validateName.validate({
+      name: this.state.name,
+    }).error;
+
+    if (nameError) {
+      this.setState({
+        nameError: nameError.details[0].message,
+      });
+    }
+
+    let descriptionError = validateDescription.validate({
+      description: this.state.description,
+    }).error;
+
+    if (descriptionError) {
+      this.setState({
+        descriptionError: descriptionError.details[0].message,
+      });
+    }
+
+    let locationError = validateLocation.validate({
+      location: this.state.location,
+    }).error;
+
+    if (locationError) {
+      this.setState({
+        locationError: locationError.details[0].message,
+      });
+    }
+
+    let imagesError = !this.state.images
+      ? "You must upload at least one image"
+      : "";
+
+    if (imagesError) {
+      this.setState({ imagesError });
+    }
+
+    if (!nameError && !locationError && !descriptionError && !imagesError) {
       this.props.createAttraction(this.state);
       this.setState({ location: "" });
-    } else {
-      alert(validateAttraction.validate({ name, location, description }).error);
-      if (!this.state.images) alert("you must upload an image");
     }
   };
 
@@ -107,7 +151,21 @@ class Create extends React.Component {
                 name="name"
                 onChange={this.onNameChange}
                 value={this.state.name}
+                error={this.state.nameError}
+                onBlur={(e) => {
+                  let nameError = validateName.validate({
+                    name: e.target.value,
+                  }).error;
+                  if (nameError) {
+                    this.setState({
+                      nameError: nameError.details[0].message,
+                    });
+                  } else {
+                    this.setState({ nameError: "" });
+                  }
+                }}
               />
+              <Error>{this.state.nameError}</Error>
             </div>
             <div>
               <Label htmlFor="description">Description</Label>
@@ -115,7 +173,21 @@ class Create extends React.Component {
                 name="description"
                 onChange={this.onDescriptionChange}
                 value={this.state.description}
+                error={this.state.descriptionError}
+                onBlur={(e) => {
+                  let descriptionError = validateDescription.validate({
+                    description: e.target.value,
+                  }).error;
+                  if (descriptionError) {
+                    this.setState({
+                      descriptionError: descriptionError.details[0].message,
+                    });
+                  } else {
+                    this.setState({ descriptionError: "" });
+                  }
+                }}
               />
+              <Error>{this.state.descriptionError}</Error>
             </div>
             <div>
               <Label htmlFor="location">Address</Label>
@@ -124,7 +196,21 @@ class Create extends React.Component {
                 name="location"
                 onChange={this.onTermChange}
                 value={this.state.term}
+                error={this.state.locationError}
+                onBlur={(e) => {
+                  let locationError = validateLocation.validate({
+                    location: e.target.value,
+                  }).error;
+                  if (locationError) {
+                    this.setState({
+                      locationError: locationError.details[0].message,
+                    });
+                  } else if (this.props.addresses.length !== 0) {
+                    this.setState({ locationError: "" });
+                  }
+                }}
               />
+              <Error>{this.state.locationError}</Error>
             </div>
             {this.props.addresses.length > 0 && this.renderAdressDropdown()}
             <div>
@@ -135,7 +221,15 @@ class Create extends React.Component {
                 type="file"
                 name="images"
                 multiple
+                onBlur={() => {
+                  if (!this.state.images) {
+                    this.setState({
+                      imagesError: "You must upload at least one image",
+                    });
+                  }
+                }}
               />
+              <Error>{this.state.imagesError}</Error>
             </div>
             <Button type="submit">Add Attraction</Button>
           </form>

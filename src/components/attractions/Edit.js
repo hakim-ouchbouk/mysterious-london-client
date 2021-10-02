@@ -3,8 +3,11 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import { editAttraction, getAttraction, getAdresses } from "../../actions";
 import history from "../../history";
-import validateAttraction from "../../validation/validateAttration";
-
+import {
+  validateName,
+  validateDescription,
+  validateLocation,
+} from "../../validation/validateAttration";
 import {
   Input,
   Label,
@@ -15,6 +18,7 @@ import {
   CenterText,
   Title,
 } from "../styledComponents/createAttraction";
+import { Error } from "../styledComponents/authPage";
 
 class Edit extends React.Component {
   constructor(props) {
@@ -26,6 +30,10 @@ class Edit extends React.Component {
       images: null,
       deleteImages: [],
       term: "",
+      nameError: "",
+      descriptionError: "",
+      locationError: "",
+      imagesError: "",
     };
   }
 
@@ -40,12 +48,17 @@ class Edit extends React.Component {
   componentDidMount = () => {
     this.props.getAttraction(this.props.match.params.id);
   };
-
   onTermChange = (e) => {
     this.setState({ term: e.target.value });
 
     _.debounce(() => {
       this.props.getAdresses(this.state.term);
+      console.log(this.props.addresses);
+      if (this.props.addresses.length === 0) {
+        this.setState({ locationError: "It must be a valid UK address" });
+      } else {
+        this.setState({ locationError: "" });
+      }
     }, 400)();
   };
 
@@ -68,14 +81,22 @@ class Edit extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let { _id } = this.props.attraction;
-    let { name, location, description } = this.state;
 
-    if (!validateAttraction.validate({ name, location, description }).error) {
-      this.props.editAttraction({ ...this.state, _id });
-    } else {
-      alert(validateAttraction.validate(this.state).error);
+    let nameError = this.state.nameError;
+    let locationError = this.state.locationError;
+    let descriptionError = this.state.descriptionError;
+
+    if (!nameError && !descriptionError && !locationError) {
+      if (
+        this.state.deleteImages.length ===
+          this.props.attraction.images.length &&
+        !this.state.images
+      ) {
+        this.setState({ imagesError: "You must upload at least one image" });
+      } else {
+        this.props.editAttraction({ ...this.state, _id });
+      }
     }
-    this.setState({ location: "" });
   };
 
   renderImages = (images) => {
@@ -98,9 +119,10 @@ class Edit extends React.Component {
             src={image.url}
             alt={image.public_id}
             style={{
-              width: "100px",
+              width: "150px",
               height: "auto",
               marginRight: "10px",
+              marginBottom: "30px",
               opacity: `${
                 this.state.deleteImages.indexOf(image.public_id) < 0
                   ? ""
@@ -159,8 +181,21 @@ class Edit extends React.Component {
                 name="name"
                 onChange={this.onNameChange}
                 value={this.state.name}
-                autoComplete="off"
+                error={this.state.nameError}
+                onBlur={(e) => {
+                  let nameError = validateName.validate({
+                    name: e.target.value,
+                  }).error;
+                  if (nameError) {
+                    this.setState({
+                      nameError: nameError.details[0].message,
+                    });
+                  } else {
+                    this.setState({ nameError: "" });
+                  }
+                }}
               />
+              <Error>{this.state.nameError}</Error>
             </div>
 
             <div>
@@ -169,7 +204,21 @@ class Edit extends React.Component {
                 name="description"
                 onChange={this.onDescriptionChange}
                 value={this.state.description}
+                error={this.state.descriptionError}
+                onBlur={(e) => {
+                  let descriptionError = validateDescription.validate({
+                    description: e.target.value,
+                  }).error;
+                  if (descriptionError) {
+                    this.setState({
+                      descriptionError: descriptionError.details[0].message,
+                    });
+                  } else {
+                    this.setState({ descriptionError: "" });
+                  }
+                }}
               />
+              <Error>{this.state.descriptionError}</Error>
             </div>
             <div>
               <Label htmlFor="location">Address</Label>
@@ -178,8 +227,21 @@ class Edit extends React.Component {
                 name="location"
                 onChange={this.onTermChange}
                 value={this.state.term}
-                autoComplete="off"
+                error={this.state.locationError}
+                onBlur={(e) => {
+                  let locationError = validateLocation.validate({
+                    location: e.target.value,
+                  }).error;
+                  if (locationError) {
+                    this.setState({
+                      locationError: locationError.details[0].message,
+                    });
+                  } else if (this.props.addresses.length !== 0) {
+                    this.setState({ locationError: "" });
+                  }
+                }}
               />
+              <Error>{this.state.locationError}</Error>
             </div>
             {this.props.addresses.length > 0 && this.renderAdressDropdown()}
 
@@ -192,6 +254,7 @@ class Edit extends React.Component {
                 name="images"
                 multiple
               />
+              <Error>{this.state.imagesError}</Error>
             </div>
             <Button type="submit">Edit Attraction</Button>
           </form>

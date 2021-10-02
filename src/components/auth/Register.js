@@ -42,28 +42,30 @@ class Register extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     let usernameError = validateUsername.validate({
       username: this.state.username,
     }).error;
+
+    if (usernameError)
+      this.setState({ usernameError: usernameError.details[0].message });
+
     let passwordError = validatePassword.validate({
       password: this.state.password,
     }).error;
 
-    let emailError = validatePassword.validate({
-      password: this.state.email,
+    if (passwordError)
+      this.setState({ passwordError: passwordError.details[0].message });
+
+    let emailError = validateEmail.validate({
+      email: this.state.email,
     }).error;
+
+    if (emailError)
+      this.setState({ emailError: emailError.details[0].message });
 
     if (!usernameError && !passwordError && !emailError) {
       this.props.register(this.state);
-    } else {
-      if (usernameError)
-        this.setState({ usernameError: usernameError.details[0].message });
-      if (passwordError) {
-        this.setState({ passwordError: passwordError.details[0].message });
-      }
-      if (emailError) {
-        this.setState({ emailError: emailError.details[0].message });
-      }
     }
   };
 
@@ -85,6 +87,7 @@ class Register extends React.Component {
                 onChange={this.emailChange}
                 name="email"
                 type="text"
+                error={this.state.emailError}
                 onBlur={(e) => {
                   if (validateEmail.validate({ email: e.target.value }).error) {
                     this.setState({
@@ -106,6 +109,7 @@ class Register extends React.Component {
                 onChange={this.usernameChange}
                 name="username"
                 type="text"
+                error={this.state.usernameError}
                 onBlur={(e) => {
                   if (
                     validateUsername.validate({ username: e.target.value })
@@ -130,6 +134,7 @@ class Register extends React.Component {
                 onChange={this.passwordChange}
                 name="password"
                 type="password"
+                error={this.state.passwordError}
                 onBlur={(e) => {
                   if (
                     validatePassword.validate({ password: e.target.value })

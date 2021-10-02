@@ -32,6 +32,7 @@ export const Input = styled.input`
   padding: 10px;
   font-size: 18px;
   background-color: #f3f4f6;
+  border: ${({ error }) => (error ? "1px solid red" : "none")};
 `;
 
 export const Label = styled.label`
@@ -80,4 +81,5 @@ export const CenterText = styled.div`
 export const Error = styled.p`
   color: red;
   font-size: 16px;
+  margin-bottom: 16px;
 `;

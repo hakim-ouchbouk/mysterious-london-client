@@ -25,13 +25,13 @@ export const Input = styled.input`
   width: 100%;
   height: 52px;
   margin: 12px 0;
-  margin-bottom: 30px;
   font-family: sans-serif;
   outline: none;
   border: none;
   padding: 10px;
   font-size: 18px;
   background-color: #f3f4f6;
+  border: ${({ error }) => (error ? "1px solid red" : "none")};
 `;
 
 export const Label = styled.label`
@@ -69,11 +69,10 @@ export const TextArea = styled.textarea`
   border: none;
   outline: none;
   margin: 12px 0;
-  margin-bottom: 30px;
   padding: 12px;
   line-height: 1.3;
-  /* border-radius: 10px; */
   background-color: #f3f4f6;
+  border: ${({ error }) => (error ? "1px solid red" : "none")};
 `;
 
 export const Select = styled.select`

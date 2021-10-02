@@ -39,20 +39,23 @@ class Login extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     let usernameError = validateUsername.validate({
       username: this.state.username,
     }).error;
+
+    if (usernameError)
+      this.setState({ usernameError: usernameError.details[0].message });
+
     let passwordError = validatePassword.validate({
       password: this.state.password,
     }).error;
+
+    if (passwordError)
+      this.setState({ passwordError: passwordError.details[0].message });
+
     if (!usernameError && !passwordError) {
       this.props.login(this.state);
-    } else {
-      if (usernameError)
-        this.setState({ usernameError: usernameError.details[0].message });
-      if (passwordError) {
-        this.setState({ passwordError: passwordError.details[0].message });
-      }
     }
   };
 
@@ -68,9 +71,7 @@ class Login extends React.Component {
             <div>
               <Label htmlFor="username">Username</Label>
               <Input
-                style={{
-                  border: `${this.state.usernameError ? "1px solid red" : ""}`,
-                }}
+                error={this.state.usernameError}
                 value={this.state.username}
                 onChange={this.usernameChange}
                 name="username"
@@ -90,11 +91,12 @@ class Login extends React.Component {
                   }
                 }}
               />
-              <Error >{this.state.usernameError}</Error>
+              <Error>{this.state.usernameError}</Error>
             </div>
             <div>
               <Label htmlFor="password">Password</Label>
               <Input
+                error={this.state.passwordError}
                 value={this.state.password}
                 onChange={this.passwordChange}
                 name="password"

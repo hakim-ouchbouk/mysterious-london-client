@@ -1,7 +1,7 @@
 import history from "../history";
 import axios from "axios";
 
-require("dotenv").config();
+// require("dotenv").config();
 
 let instance = axios.create({
   baseURL: "http://localhost:3001",
@@ -72,6 +72,10 @@ export const createAttraction = (values) => {
   }
   return (dispatch) => {
     (async () => {
+      dispatchMessage(dispatch, {
+        type: "FLASH_MESSAGE",
+        payload: "Attraction is being submitted",
+      });
       let { data } = await instance.post("/attractions", fd);
       dispatch({ type: "CREAT_ATTRACTION", payload: data });
 

@@ -57,7 +57,7 @@ export const Title = styled.h1`
   position: relative;
   font-size: 42px;
   color: #212529;
-  margin: 42px 0 82px 0;
+  margin: 42px 0 92px 0;
 `;
 
 export const CenterText = styled.div`
@@ -92,7 +92,6 @@ export const FlashMessage = styled.p`
   color: #064e3b;
   background-color: #d1fae5;
   border-radius: 10px;
-  font-size: 18px;
   right: 50%;
   transform: translate(50%, 20px);
   padding: 12px;

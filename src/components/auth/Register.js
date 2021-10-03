@@ -76,6 +76,8 @@ class Register extends React.Component {
       <MainContainer>
         <CenterText>
           <Title>Register</Title>
+          {this.props.user.error && <p>{this.props.user.error}</p>}
+
         </CenterText>
 
         <Container>

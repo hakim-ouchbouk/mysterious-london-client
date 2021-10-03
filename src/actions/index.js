@@ -12,9 +12,14 @@ export const register = (creds) => {
   return (dispatch) => {
     (async () => {
       let { data } = await instance.post("/register", creds);
-      dispatch({ type: "REGISTER", payload: data });
-      if (history.action !== "POP") history.goBack();
-      else history.push("/");
+
+      if (data.username) {
+        dispatch({ type: "REGISTER", payload: data });
+        if (history.action !== "POP") history.goBack();
+        else history.push("/");
+      } else {
+        dispatch({ type: "ERROR", payload: data });
+      }
     })();
   };
 };
@@ -23,9 +28,14 @@ export const login = (creds) => {
   return (dispatch) => {
     (async () => {
       let { data } = await instance.post("/login", creds);
-      dispatch({ type: "LOG_IN", payload: data });
-      if (history.action !== "POP") history.goBack();
-      else history.push("/");
+
+      if (data.username) {
+        dispatch({ type: "LOG_IN", payload: data });
+        if (history.action !== "POP") history.goBack();
+        else history.push("/");
+      } else {
+        dispatch({ type: "ERROR", payload: data });
+      }
     })();
   };
 };

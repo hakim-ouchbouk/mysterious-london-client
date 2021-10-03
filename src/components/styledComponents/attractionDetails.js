@@ -244,15 +244,15 @@ export const LoginButton = styled.button`
 export const RegisterButton = styled.button`
   padding: 12px;
   border: none;
-  background-color: #D1FAE5;
+  background-color: #d1fae5;
   transition: all 0.3s;
 
   .link {
-    color:  #064E3B;
+    color: #064e3b;
     text-decoration: none;
   }
 
   &:hover {
-    background-color: #A7F3D0;
+    background-color: #a7f3d0;
   }
 `;

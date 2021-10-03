@@ -65,6 +65,7 @@ class Login extends React.Component {
       <MainContainer>
         <CenterText>
           <Title>Login</Title>
+          {this.props.user.error && <p>{this.props.user.error}</p>}
         </CenterText>
         <Container>
           <form onSubmit={this.handleSubmit}>

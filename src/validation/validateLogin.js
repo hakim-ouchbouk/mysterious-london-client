@@ -13,7 +13,7 @@ export const validatePassword = Joi.object({
   password: Joi.string()
     .pattern(new RegExp("^[A-Za-z0-9_@./#&+-]*$"))
     .message({ "string.pattern.base": "Invalid password" })
-    .min(6)
+    // .min(6)
     .max(20)
     .required(),
 });

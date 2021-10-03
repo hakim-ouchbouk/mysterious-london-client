@@ -8,6 +8,9 @@ function userReducer(state = { loggedIn: false }, { type, payload }) {
       return { loggedIn: false };
     case "UPDATE_USER_LIST":
       return { ...state, ...payload };
+
+    case "ERROR":
+      return { error: payload };
     default:
       return state;
   }

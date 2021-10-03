@@ -17,6 +17,7 @@ import {
   Select,
   CenterText,
   Title,
+  FlashMessage,
 } from "../styledComponents/createAttraction";
 import { Error } from "../styledComponents/authPage";
 
@@ -161,7 +162,12 @@ class Edit extends React.Component {
     return (
       <div>
         <CenterText>
-          <Title>Edit Attraction</Title>
+          <Title>
+            Edit Attraction
+            {this.props.message && (
+              <FlashMessage>{this.props.message}</FlashMessage>
+            )}
+          </Title>
         </CenterText>
         <Container style={{ width: "50%", marginBottom: "50px" }}>
           <form onSubmit={this.handleSubmit} encType="multipart/form-data">
@@ -265,11 +271,12 @@ class Edit extends React.Component {
 }
 
 export default connect(
-  ({ attractions, user, addresses }, ownProps) => {
+  ({ attractions, user, addresses, flashMessage }, ownProps) => {
     return {
       attraction: attractions[ownProps.match.params.id],
       user,
       addresses,
+      message: flashMessage.data,
     };
   },
   { getAttraction, editAttraction, getAdresses }

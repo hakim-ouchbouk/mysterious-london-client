@@ -8,6 +8,14 @@ let instance = axios.create({
   withCredentials: true,
 });
 
+function dispatchMessage(dispatch, { type, payload }) {
+  dispatch({ type, payload });
+
+  setTimeout(() => {
+    dispatch({ type, payload: "" });
+  }, 5000);
+}
+
 export const register = (creds) => {
   return (dispatch) => {
     (async () => {
@@ -18,11 +26,7 @@ export const register = (creds) => {
         if (history.action !== "POP") history.goBack();
         else history.push("/");
       } else {
-        dispatch({ type: "ERROR", payload: data });
-
-        setTimeout(() => {
-          dispatch({ type: "ERROR", payload: "" });
-        }, 5000);
+        dispatchMessage(dispatch, { type: "ERROR", payload: data });
       }
     })();
   };
@@ -38,11 +42,7 @@ export const login = (creds) => {
         if (history.action !== "POP") history.goBack();
         else history.push("/");
       } else {
-        dispatch({ type: "ERROR", payload: data });
-
-        setTimeout(() => {
-          dispatch({ type: "ERROR", payload: "" });
-        }, 5000);
+        dispatchMessage(dispatch, { type: "ERROR", payload: data });
       }
     })();
   };
@@ -53,16 +53,10 @@ export const logout = () => {
     (async () => {
       await instance.post("/logout");
       dispatch({ type: "LOG_OUT" });
-      dispatch({
+      dispatchMessage(dispatch, {
         type: "FLASH_MESSAGE",
         payload: "You are logged out",
       });
-      setTimeout(() => {
-        dispatch({
-          type: "FLASH_MESSAGE",
-          payload: "",
-        });
-      }, 5000);
     })();
   };
 };
@@ -80,16 +74,11 @@ export const createAttraction = (values) => {
     (async () => {
       let { data } = await instance.post("/attractions", fd);
       dispatch({ type: "CREAT_ATTRACTION", payload: data });
-      dispatch({
+
+      dispatchMessage(dispatch, {
         type: "FLASH_MESSAGE",
         payload: "Attraction has been created",
       });
-      setTimeout(() => {
-        dispatch({
-          type: "FLASH_MESSAGE",
-          payload: "",
-        });
-      }, 5000);
       history.push(`/attractions/${data._id}`);
     })();
   };
@@ -109,18 +98,20 @@ export const editAttraction = (values) => {
   }
   return (dispatch) => {
     (async () => {
+      dispatchMessage(dispatch, {
+        type: "FLASH_MESSAGE",
+        payload: "The changes are being submitted",
+      });
+
       let { data } = await instance.put(`/attractions/${_id}`, fd);
+
       dispatch({ type: "CREAT_ATTRACTION", payload: data });
-      dispatch({
+
+      dispatchMessage(dispatch, {
         type: "FLASH_MESSAGE",
         payload: "Attraction has been edited",
       });
-      setTimeout(() => {
-        dispatch({
-          type: "FLASH_MESSAGE",
-          payload: "",
-        });
-      }, 5000);
+
       history.push(`/attractions/${data._id}`);
     })();
   };

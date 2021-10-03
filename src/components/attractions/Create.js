@@ -17,6 +17,7 @@ import {
   Select,
   CenterText,
   Title,
+  FlashMessage,
 } from "../styledComponents/createAttraction";
 import { MainContainer } from "../styledComponents/general";
 import { Error } from "../styledComponents/authPage";
@@ -136,7 +137,12 @@ class Create extends React.Component {
     return (
       <div>
         <CenterText>
-          <Title>Add Attraction</Title>
+          <Title>
+            Add Attraction
+            {this.props.message && (
+              <FlashMessage>{this.props.message}</FlashMessage>
+            )}
+          </Title>
         </CenterText>
         <Container>
           <form
@@ -221,7 +227,6 @@ class Create extends React.Component {
                 type="file"
                 name="images"
                 multiple
-           
               />
               <Error>{this.state.imagesError}</Error>
             </div>
@@ -238,8 +243,8 @@ class Create extends React.Component {
 }
 
 export default connect(
-  ({ addresses, user }) => {
-    return { addresses, user };
+  ({ addresses, user, flashMessage }) => {
+    return { addresses, user, message: flashMessage.data };
   },
   { createAttraction, getAdresses, isLoggedIn }
 )(Create);

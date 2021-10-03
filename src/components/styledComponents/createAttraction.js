@@ -54,9 +54,10 @@ export const Button = styled.button`
 `;
 
 export const Title = styled.h1`
+  position: relative;
   font-size: 42px;
   color: #212529;
-  margin: 40px 0 42px 0;
+  margin: 42px 0 82px 0;
 `;
 
 export const CenterText = styled.div`
@@ -83,4 +84,18 @@ export const Select = styled.select`
   margin-bottom: 30px;
   padding: 12px;
   background-color: #f3f4f6;
+`;
+
+export const FlashMessage = styled.p`
+  position: absolute;
+  font-size: 25px;
+  color: #064e3b;
+  background-color: #d1fae5;
+  border-radius: 10px;
+  font-size: 18px;
+  right: 50%;
+  transform: translate(50%, 20px);
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 30px;
 `;

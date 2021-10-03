@@ -14,6 +14,8 @@ class Header extends React.Component {
     return <LogoutGoogle />;
   };
 
+
+
   render() {
     return (
       <Navbar bg="light" expand="lg">
@@ -66,18 +68,6 @@ class Header extends React.Component {
                 </Nav.Link>
               )}
 
-              {/* {!this.props.user.loggedIn && (
-                <Nav.Link>
-                  <LoginGoogle
-                    text={
-                      <p>
-                        Login with <IoLogoGoogle />
-                      </p>
-                    }
-                  />
-                </Nav.Link>
-              )} */}
-
               {this.props.user.loggedIn && this.props.user.oauth && (
                 <Nav.Link>
                   <LogoutGoogle />
@@ -88,6 +78,8 @@ class Header extends React.Component {
         </Container>
       </Navbar>
     );
+
+   
   }
 }
 

@@ -55,7 +55,7 @@ class Create extends React.Component {
       } else {
         this.setState({ locationError: "" });
       }
-    }, 400)();
+    }, 500)();
   };
 
   onLocationChange = (e) => {
@@ -221,13 +221,7 @@ class Create extends React.Component {
                 type="file"
                 name="images"
                 multiple
-                onBlur={() => {
-                  if (!this.state.images) {
-                    this.setState({
-                      imagesError: "You must upload at least one image",
-                    });
-                  }
-                }}
+           
               />
               <Error>{this.state.imagesError}</Error>
             </div>

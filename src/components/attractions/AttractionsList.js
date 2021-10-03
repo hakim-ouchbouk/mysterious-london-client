@@ -10,7 +10,8 @@ import {
   CenterButton,
   Button,
   CenterText,
-  Title
+  Title,
+  FlashMessage,
 } from "../styledComponents/attractionsList";
 
 import {
@@ -33,7 +34,6 @@ class AttractionsList extends React.Component {
   renderAttractions = () => {
     if (!this.props.attractions) return "";
     return (
-      
       <Container>
         {this.props.attractions.map(({ name, description, _id, images }) => {
           return (
@@ -76,7 +76,12 @@ class AttractionsList extends React.Component {
     return (
       <MainContainer>
         <CenterText>
-          <Title>All the places in London</Title>
+          <Title>
+            All the places in London
+            {this.props.flashMessage && (
+              <FlashMessage>{this.props.flashMessage}</FlashMessage>
+            )}
+          </Title>
         </CenterText>
         {this.renderAttractions()}
         <br />
@@ -87,10 +92,11 @@ class AttractionsList extends React.Component {
 }
 
 export default connect(
-  ({ attractions, attractionsCount }) => {
+  ({ attractions, attractionsCount, flashMessage }) => {
     return {
       attractions: _.values(attractions),
       count: attractionsCount.count,
+      flashMessage: flashMessage.data,
     };
   },
   { getAttractions, getAllAttractions, getAttractionCount }

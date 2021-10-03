@@ -4,6 +4,7 @@ import attractions from "./attractionsReducer";
 import attractionsSearch from "./attractionsSearchReducer";
 import addresses from "./addressesReducer";
 import AttractionCountReducer from "./AttractionCountReducer";
+import flashMessageReducer from "./flashMessageReducer";
 
 export default combineReducers({
   user,
@@ -11,4 +12,5 @@ export default combineReducers({
   attractionsSearchResults: attractionsSearch,
   addresses,
   attractionsCount: AttractionCountReducer,
+  flashMessage: flashMessageReducer,
 });

@@ -69,9 +69,10 @@ export const GoogleButton = styled.button`
 `;
 
 export const Title = styled.h1`
+  position: relative;
   font-size: 42px;
   color: #212529;
-  margin: 86px 0 42px 0;
+  margin: 86px 0 60px 0;
 `;
 
 export const CenterText = styled.div`
@@ -82,4 +83,12 @@ export const Error = styled.p`
   color: red;
   font-size: 16px;
   margin-bottom: 16px;
+`;
+
+export const FlashError = styled.p`
+  position: absolute;
+  color: red;
+  font-size: 18px;
+  right:50%;
+  transform: translate(50% ,20px);
 `;

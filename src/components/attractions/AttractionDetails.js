@@ -25,6 +25,7 @@ import {
   Edit,
   Face,
   Flag,
+  FlashMessage,
   Header,
   Img,
   ImgsContainer,
@@ -128,7 +129,9 @@ class AttractionDetails extends React.Component {
             </Link>
           </LoginButton>
           <RegisterButton>
-            <Link className="link" to="/register">Register</Link>
+            <Link className="link" to="/register">
+              Register
+            </Link>
           </RegisterButton>
         </div>
       );
@@ -297,6 +300,9 @@ class AttractionDetails extends React.Component {
               <div>
                 <Title>
                   {name} <p className="location">{location}</p>
+                  {this.props.flashMessage && (
+                    <FlashMessage>{this.props.flashMessage}</FlashMessage>
+                  )}
                 </Title>
                 {this.renderEditButton(_id)}
                 {this.renderDeleteButton()}
@@ -352,8 +358,12 @@ class AttractionDetails extends React.Component {
 }
 
 export default connect(
-  ({ attractions, user }, ownProps) => {
-    return { attraction: attractions[ownProps.match.params.id], user };
+  ({ attractions, user, flashMessage }, ownProps) => {
+    return {
+      attraction: attractions[ownProps.match.params.id],
+      user,
+      flashMessage: flashMessage.data,
+    };
   },
   {
     getAttraction,

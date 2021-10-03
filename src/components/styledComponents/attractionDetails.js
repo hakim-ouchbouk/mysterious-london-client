@@ -25,6 +25,7 @@ export const Header = styled.div`
 export const Title = styled.h1`
   font-size: 48px;
   color: #065f46;
+  position: relative;
   .location {
     font-size: 30px;
     margin: 10px 0;
@@ -255,4 +256,15 @@ export const RegisterButton = styled.button`
   &:hover {
     background-color: #a7f3d0;
   }
+`;
+
+export const FlashMessage = styled.p`
+  position: absolute;
+  font-size: 25px;
+  color: #064e3b;
+  top: 10%;
+  left: 50%;
+  background-color: #d1fae5;
+  padding:12px;
+  border-radius: 10px;
 `;

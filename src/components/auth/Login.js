@@ -16,6 +16,7 @@ import {
   CenterText,
   GoogleButton,
   Error,
+  FlashError,
 } from "../styledComponents/authPage";
 import { MainContainer } from "../styledComponents/general";
 import LoginGoogle from "./LoginGoogle";
@@ -64,8 +65,10 @@ class Login extends React.Component {
     return (
       <MainContainer>
         <CenterText>
-          <Title>Login</Title>
-          {this.props.user.error && <p>{this.props.user.error}</p>}
+          <Title>
+            Login
+            {this.props.user.error && <FlashError>{this.props.user.error}</FlashError>}
+          </Title>
         </CenterText>
         <Container>
           <form onSubmit={this.handleSubmit}>

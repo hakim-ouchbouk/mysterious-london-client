@@ -19,6 +19,10 @@ export const register = (creds) => {
         else history.push("/");
       } else {
         dispatch({ type: "ERROR", payload: data });
+
+        setTimeout(() => {
+          dispatch({ type: "ERROR", payload: "" });
+        }, 5000);
       }
     })();
   };
@@ -35,6 +39,10 @@ export const login = (creds) => {
         else history.push("/");
       } else {
         dispatch({ type: "ERROR", payload: data });
+
+        setTimeout(() => {
+          dispatch({ type: "ERROR", payload: "" });
+        }, 5000);
       }
     })();
   };
@@ -45,6 +53,16 @@ export const logout = () => {
     (async () => {
       await instance.post("/logout");
       dispatch({ type: "LOG_OUT" });
+      dispatch({
+        type: "FLASH_MESSAGE",
+        payload: "You are logged out",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: "FLASH_MESSAGE",
+          payload: "",
+        });
+      }, 5000);
     })();
   };
 };
@@ -62,6 +80,16 @@ export const createAttraction = (values) => {
     (async () => {
       let { data } = await instance.post("/attractions", fd);
       dispatch({ type: "CREAT_ATTRACTION", payload: data });
+      dispatch({
+        type: "FLASH_MESSAGE",
+        payload: "Attraction has been created",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: "FLASH_MESSAGE",
+          payload: "",
+        });
+      }, 5000);
       history.push(`/attractions/${data._id}`);
     })();
   };
@@ -83,6 +111,16 @@ export const editAttraction = (values) => {
     (async () => {
       let { data } = await instance.put(`/attractions/${_id}`, fd);
       dispatch({ type: "CREAT_ATTRACTION", payload: data });
+      dispatch({
+        type: "FLASH_MESSAGE",
+        payload: "Attraction has been edited",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: "FLASH_MESSAGE",
+          payload: "",
+        });
+      }, 5000);
       history.push(`/attractions/${data._id}`);
     })();
   };
@@ -129,6 +167,16 @@ export const deleteAttraction = (id) => {
     (async () => {
       let { data } = await instance.delete(`/attractions/${id}`);
       dispatch({ type: "DELETE_ATTRACTION", payload: data });
+      dispatch({
+        type: "FLASH_MESSAGE",
+        payload: "Attraction has been deleted",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: "FLASH_MESSAGE",
+          payload: "",
+        });
+      }, 5000);
       history.push("/");
     })();
   };
@@ -166,6 +214,17 @@ export const addToBeenThere = (attractionId) => {
       if (data !== "ALREADY ADDED") {
         dispatch(getAttraction(attractionId));
         dispatch({ type: "UPDATE_USER_LIST", payload: data });
+
+        dispatch({
+          type: "FLASH_MESSAGE",
+          payload: "Attraction has been to your list",
+        });
+        setTimeout(() => {
+          dispatch({
+            type: "FLASH_MESSAGE",
+            payload: "",
+          });
+        }, 5000);
       }
     })();
   };
@@ -180,6 +239,17 @@ export const addToWantToVisit = (attractionId) => {
       if (data !== "ALREADY ADDED") {
         dispatch(getAttraction(attractionId));
         dispatch({ type: "UPDATE_USER_LIST", payload: data });
+
+        dispatch({
+          type: "FLASH_MESSAGE",
+          payload: "Attraction has been added to your list",
+        });
+        setTimeout(() => {
+          dispatch({
+            type: "FLASH_MESSAGE",
+            payload: "",
+          });
+        }, 5000);
       }
     })();
   };
@@ -191,6 +261,17 @@ export const addToList = (attractionId) => {
       let { data } = await instance.post(`/attractions/${attractionId}/list`);
       if (data !== "ALREADY ADDED")
         dispatch({ type: "UPDATE_USER_LIST", payload: data });
+
+      dispatch({
+        type: "FLASH_MESSAGE",
+        payload: "Attraction has been added to your list",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: "FLASH_MESSAGE",
+          payload: "",
+        });
+      }, 5000);
     })();
   };
 };

@@ -15,6 +15,7 @@ import {
   Button,
   CenterText,
   Error,
+  FlashError,
 } from "../styledComponents/authPage";
 import { MainContainer } from "../styledComponents/general";
 
@@ -69,15 +70,18 @@ class Register extends React.Component {
     }
   };
 
+
   render() {
     if (this.props.user && this.props.user.loggedIn) history.push("/");
 
     return (
       <MainContainer>
         <CenterText>
-          <Title>Register</Title>
-          {this.props.user.error && <p>{this.props.user.error}</p>}
+          <Title>Register
+          {this.props.user.error && <FlashError>{this.props.user.error}</FlashError>}
 
+          </Title>
+          
         </CenterText>
 
         <Container>

@@ -52,7 +52,7 @@ class MyAttractions extends React.Component {
         {this.renderAttractions(this.props.user.wantToVisit)}
         <Title>Places Where You've been</Title>
         {this.renderAttractions(this.props.user.beenThere)}
-        <Title>Your List List</Title>
+        <Title>Your List </Title>
         {this.renderAttractions(this.props.user.list)}
       </MainContainer>
     );

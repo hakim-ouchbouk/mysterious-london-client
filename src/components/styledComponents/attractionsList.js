@@ -43,13 +43,13 @@ export const CardContent = styled.div`
 
   .name {
     text-decoration: none;
-    color: #065F46;
+    color: #065f46;
     margin-bottom: 12px;
     font-size: 25px;
     font-weight: 500;
   }
   .subtitle {
-    font-family:'Times New Roman', Times, serif;
+    font-family: "Times New Roman", Times, serif;
     text-transform: lowercase;
     color: black;
     font-size: 18px;
@@ -87,11 +87,25 @@ export const Button = styled.button`
 `;
 
 export const Title = styled.h1`
+  position: relative;
   font-size: 42px;
   color: #212529;
-  margin: 40px 0 42px 0;
+  margin: 40px 0 100px 0;
 `;
 
 export const CenterText = styled.div`
   text-align: center;
+`;
+
+export const FlashMessage = styled.p`
+  position: absolute;
+  font-size: 18px;
+  color: #064e3b;
+  top: 0;
+  right: 50%;
+  background-color: #d1fae5;
+  padding: 12px;
+  border-radius: 10px;
+  transform: translate(50% ,65px);
+
 `;

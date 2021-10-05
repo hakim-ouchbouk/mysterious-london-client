@@ -13,7 +13,7 @@ function dispatchMessage(dispatch, { type, payload }) {
 
   setTimeout(() => {
     dispatch({ type, payload: "" });
-  }, 5000);
+  }, 3000);
 }
 
 export const register = (creds) => {

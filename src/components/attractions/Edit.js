@@ -87,6 +87,7 @@ class Edit extends React.Component {
     let locationError = this.state.locationError;
     let descriptionError = this.state.descriptionError;
 
+
     if (!nameError && !descriptionError && !locationError) {
       if (
         this.state.deleteImages.length ===

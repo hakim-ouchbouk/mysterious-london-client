@@ -11,3 +11,4 @@ export const validateDescription = Joi.object({
 export const validateLocation = Joi.object({
   location: Joi.string().required(),
 });
+

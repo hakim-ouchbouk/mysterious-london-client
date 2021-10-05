@@ -92,8 +92,13 @@ class Create extends React.Component {
       });
     }
 
+    let addresses = this.props.addresses;
+
+    if (addresses.length > 0 && this.state.location === "") {
+      this.setState({ location: addresses[0].address });
+    }
     let locationError = validateLocation.validate({
-      location: this.state.location,
+      location: this.state.location || addresses[0].address,
     }).error;
 
     if (locationError) {
@@ -117,9 +122,10 @@ class Create extends React.Component {
   };
 
   renderAdressDropdown = () => {
+    let addresses = this.props.addresses;
     return (
       <Select onClick={this.onLocationChange}>
-        {this.props.addresses.map(({ address }, i) => {
+        {addresses.map(({ address }, i) => {
           return (
             <option key={i} value={address}>
               {address}

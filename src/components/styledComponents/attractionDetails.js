@@ -141,6 +141,7 @@ export const TextArea = styled.textarea`
   border: none;
   padding: 12px;
   outline: none;
+  border: ${({ error }) => (error ? "1px solid red" : "none")};
   &:focus {
     box-shadow: 0 0 0 1px #065f46;
   }
@@ -198,9 +199,6 @@ export const Review = styled.div`
   }
 `;
 
-export const Rating = styled.div`
-  margin: 0px 0 15px 0;
-`;
 
 export const Delete = styled.button`
   background-color: #f87171;
@@ -265,6 +263,21 @@ export const FlashMessage = styled.p`
   top: 10%;
   left: 50%;
   background-color: #d1fae5;
-  padding:12px;
+  padding: 12px;
   border-radius: 10px;
 `;
+
+
+export const Rating = styled.div`
+  margin: 0px 0 15px 0;
+  display: flex;
+  align-items: center;
+  gap:10px;
+`;
+
+export const RatingsNumber = styled.p`
+  color: #064e3b;
+  margin-bottom: 0;
+  padding: 0;
+`;
+

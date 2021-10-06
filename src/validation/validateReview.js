@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const schema = Joi.object({
-  content: Joi.string().min(5).required(),
+  content: Joi.string().required(),
 });
 
 export default schema;

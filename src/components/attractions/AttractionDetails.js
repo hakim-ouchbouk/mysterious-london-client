@@ -36,6 +36,7 @@ import {
   LoginButton,
   MapContainer,
   Rating,
+  RatingsNumber,
   RegisterButton,
   Review,
   ReviewButton,
@@ -50,6 +51,7 @@ import {
 import validateReview from "../../validation/validateReview";
 import { MainContainer } from "../styledComponents/general";
 import history from "../../history";
+import { Error } from "../styledComponents/authPage";
 
 class AttractionDetails extends React.Component {
   constructor(props) {
@@ -57,6 +59,7 @@ class AttractionDetails extends React.Component {
     this.state = {
       review: "",
       stars: 0,
+      reviewError: "",
     };
     this.imgsContainer = React.createRef();
   }
@@ -141,15 +144,20 @@ class AttractionDetails extends React.Component {
       e.preventDefault();
       let attractionId = this.props.attraction._id;
 
-      if (!validateReview.validate({ content: this.state.review }).error) {
+      let reviewError = validateReview.validate({
+        content: this.state.review,
+      }).error;
+
+      if (!reviewError) {
         this.props.addAttractionReview({
           attractionId,
           content: this.state.review,
           stars: this.state.stars,
         });
         this.setState({ review: "", stars: 0 });
+        this.setState({ reviewError: "" });
       } else {
-        alert(validateReview.validate({ content: this.state.review }).error);
+        this.setState({ reviewError: reviewError.details[0].message });
       }
     };
 
@@ -174,6 +182,7 @@ class AttractionDetails extends React.Component {
           <TextArea
             className="text-area"
             value={this.state.review}
+            error={this.state.reviewError}
             onChange={(e) => {
               this.setState({ review: e.target.value });
             }}
@@ -182,6 +191,7 @@ class AttractionDetails extends React.Component {
             cols="30"
             rows="10"
           ></TextArea>
+          <Error>{this.state.reviewError}</Error>
           <ReviewButton type="submit">Add Review</ReviewButton>
         </form>
       </div>
@@ -291,8 +301,16 @@ class AttractionDetails extends React.Component {
 
   renderAttraction = () => {
     if (this.props.attraction) {
-      let { name, description, images, location, _id, geocode } =
-        this.props.attraction;
+      let {
+        name,
+        description,
+        images,
+        location,
+        _id,
+        geocode,
+        averageRating,
+        reviews,
+      } = this.props.attraction;
       return (
         <div>
           <MainContainer>
@@ -304,6 +322,22 @@ class AttractionDetails extends React.Component {
                     <FlashMessage>{this.props.flashMessage}</FlashMessage>
                   )}
                 </Title>
+                <Rating>
+                  <StarRatings
+                    rating={averageRating}
+                    starDimension="20px"
+                    starSpacing="5px"
+                    starRatedColor="#065f46"
+                  />
+                  <RatingsNumber>
+                    {reviews.length}{" "}
+                    {`${
+                      reviews.length > 1 || reviews.length === 0
+                        ? "ratings"
+                        : "rating"
+                    }`}
+                  </RatingsNumber>
+                </Rating>
                 {this.renderEditButton(_id)}
                 {this.renderDeleteButton()}
               </div>

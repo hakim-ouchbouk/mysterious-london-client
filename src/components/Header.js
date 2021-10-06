@@ -5,72 +5,69 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { logout, googleAuth } from "../actions";
 
 import LogoutGoogle from "./auth/LogoutGoogle";
+import { Brand, NavItem } from "./styledComponents/header";
 
 class Header extends React.Component {
-
-
   renderGoogleLogout = () => {
     if (!this.props.user.loggedIn || !this.props.user.oauth) return "";
     return <LogoutGoogle />;
   };
 
-
-
   render() {
     return (
-      <Navbar bg="light" expand="lg">
-        <Container style={{ textDecoration: "none" }}>
+      <Navbar sticky="top" bg="light" expand="lg">
+        <Container>
           <Navbar.Brand as={Link} to="/">
-            Arcane London
+            <Brand>Arcane London</Brand>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle color='red' aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">
-                Attractions
+                <NavItem>Attractions</NavItem>
               </Nav.Link>
               <Nav.Link as={Link} to="/attractions/map">
-                Map
+                <NavItem>Map</NavItem>
               </Nav.Link>
-              {!this.props.user.loggedIn && (
-                <Nav.Link as={Link} to="/register">
-                  Register
-                </Nav.Link>
-              )}
+
               {this.props.user.loggedIn && (
                 <Nav.Link as={Link} to="/create">
-                  Add Attraction
+                  <NavItem>Add Attraction</NavItem>
                 </Nav.Link>
               )}
               {this.props.user.loggedIn && (
                 <Nav.Link as={Link} to="/myattractions">
-                  {this.props.user.username}
+                  <NavItem>Lists</NavItem>
                 </Nav.Link>
               )}
               <Nav.Link as={Link} to="/attractions/search">
-                Search
+                <NavItem>Search</NavItem>
               </Nav.Link>
-              {/* {this.props.user && this.props.user.username && (
-                <Nav.Link>{this.props.user.username}</Nav.Link>
-              )} */}
+              {!this.props.user.loggedIn && (
+                <Nav.Link as={Link} to="/register">
+                  <NavItem>Register</NavItem>
+                </Nav.Link>
+              )}
               {this.props.user.loggedIn && !this.props.user.oauth && (
                 <Nav.Link
                   onClick={() => {
                     this.props.logout();
                   }}
                 >
-                  Logout
+                  <NavItem>Logout</NavItem>
                 </Nav.Link>
               )}
               {!this.props.user.loggedIn && (
                 <Nav.Link as={Link} to="/login">
-                  Login
+                  <NavItem>Login</NavItem>
                 </Nav.Link>
               )}
 
               {this.props.user.loggedIn && this.props.user.oauth && (
                 <Nav.Link>
-                  <LogoutGoogle />
+                  <NavItem>
+                    <LogoutGoogle />
+                  </NavItem>
                 </Nav.Link>
               )}
             </Nav>
@@ -78,8 +75,6 @@ class Header extends React.Component {
         </Container>
       </Navbar>
     );
-
-   
   }
 }
 

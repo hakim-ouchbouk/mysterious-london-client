@@ -120,7 +120,7 @@ export const Description = styled.p`
   line-height: 1.5;
   color: #111827;
   margin-bottom: 48px;
-  word-break: break-all;
+  /* word-break: break-all; */
 `;
 
 export const MapContainer = styled.div`

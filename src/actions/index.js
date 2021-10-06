@@ -184,7 +184,6 @@ export const addAttractionReview = ({ attractionId, content, stars }) => {
         `/attractions/${attractionId}/reviews`,
         { content, stars }
       );
-      console.log(data.averageRating)
       dispatch({ type: "GET_ATTRACTION", payload: data });
     })();
   };
@@ -196,7 +195,6 @@ export const deleteAttrationReview = ({ attractionId, reviewId }) => {
       let { data } = await instance.delete(
         `/attractions/${attractionId}/reviews/${reviewId}`
       );
-      console.log(data.averageRating)
 
       dispatch({ type: "GET_ATTRACTION", payload: data });
     })();

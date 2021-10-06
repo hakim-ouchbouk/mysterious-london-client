@@ -27,7 +27,7 @@ class App extends React.Component {
     return (
       <Router history={history}>
         <GlobalStyles />
-        <Header />
+        <Header  />
           <Switch>
             <Route exact path="/" component={AttractionsList} />
             <Route exact path="/register" component={Register} />

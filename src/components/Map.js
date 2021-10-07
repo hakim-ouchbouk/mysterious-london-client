@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 
 
+
 const Marker = () => (
   <div>
     <img alt="marker" src="/marker.png" height="25px" width="25px" />

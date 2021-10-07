@@ -26,7 +26,7 @@ export const AttractionCard = styled.figure`
   align-self: start;
   transition: all 0.3s;
   justify-content: space-between;
-
+  z-index: 10;
   .link {
     text-decoration: none;
   }

@@ -199,7 +199,6 @@ export const Review = styled.div`
   }
 `;
 
-
 export const Delete = styled.button`
   background-color: #f87171;
   border: none;
@@ -267,12 +266,11 @@ export const FlashMessage = styled.p`
   border-radius: 10px;
 `;
 
-
 export const Rating = styled.div`
   margin: 0px 0 15px 0;
   display: flex;
   align-items: center;
-  gap:10px;
+  gap: 10px;
 `;
 
 export const RatingsNumber = styled.p`
@@ -280,4 +278,3 @@ export const RatingsNumber = styled.p`
   margin-bottom: 0;
   padding: 0;
 `;
-

@@ -17,7 +17,6 @@ import AttractionsMap from "./attractions/AttractionsMap";
 import GlobalStyles from "../styles/GlobalStyles";
 
 
-
 class App extends React.Component {
   componentDidMount() {
     this.props.isLoggedIn();

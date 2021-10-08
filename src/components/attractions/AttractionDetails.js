@@ -12,6 +12,7 @@ import {
   addToList,
   deleteAttraction,
   getUserAttractions,
+  removeFromList,
 } from "../../actions";
 import { Link } from "react-router-dom";
 import {
@@ -234,6 +235,58 @@ class AttractionDetails extends React.Component {
     );
   };
 
+  isOnList = () => {
+    if (
+      this.props.user.list &&
+      this.props.user.list.some(
+        (attraction) => attraction._id === this.props.attraction._id
+      )
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  renderAddToListButton = (_id) => {
+    if (!this.props.user.loggedIn) {
+      return (
+        <Btn
+          onClick={() => {
+            this.props.addToList(_id);
+          }}
+        >
+          <List />
+          <p>Add to List</p>
+        </Btn>
+      );
+    } else {
+      if (this.isOnList()) {
+        return (
+          <Btn
+            onClick={() => {
+              this.props.removeFromList(_id);
+            }}
+          >
+            <List />
+            <p>Remove </p>
+          </Btn>
+        );
+      } else {
+        return (
+          <Btn
+            onClick={() => {
+              this.props.addToList(_id);
+            }}
+          >
+            <List />
+            <p>Add to List</p>
+          </Btn>
+        );
+      }
+    }
+  };
+
   renderButtons = (_id) => {
     let { visited, wantToVisit } = this.props.attraction;
     return (
@@ -260,14 +313,8 @@ class AttractionDetails extends React.Component {
           <p>Been There</p>
           <p className="number">{visited}</p>
         </Btn>
-        <Btn
-          onClick={() => {
-            this.props.addToList(_id);
-          }}
-        >
-          <List />
-          <p>Add to List</p>
-        </Btn>
+
+        {this.renderAddToListButton(_id)}
       </div>
     );
   };
@@ -408,5 +455,6 @@ export default connect(
     addToList,
     deleteAttraction,
     getUserAttractions,
+    removeFromList,
   }
 )(AttractionDetails);

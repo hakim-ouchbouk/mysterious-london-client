@@ -1,8 +1,6 @@
 import history from "../history";
 import axios from "axios";
 
-// require("dotenv").config();
-
 let instance = axios.create({
   baseURL: "http://localhost:3001",
   withCredentials: true,
@@ -255,19 +253,42 @@ export const addToList = (attractionId) => {
   return (dispatch) => {
     (async () => {
       let { data } = await instance.post(`/attractions/${attractionId}/list`);
-      if (data !== "ALREADY ADDED")
+      if (data !== "WRONG REQUEST") {
         dispatch({ type: "UPDATE_USER_LIST", payload: data });
 
-      dispatch({
-        type: "FLASH_MESSAGE",
-        payload: "Attraction has been added to your list",
-      });
-      setTimeout(() => {
         dispatch({
           type: "FLASH_MESSAGE",
-          payload: "",
+          payload: "Attraction has been added to your list",
         });
-      }, 5000);
+        setTimeout(() => {
+          dispatch({
+            type: "FLASH_MESSAGE",
+            payload: "",
+          });
+        }, 5000);
+      }
+    })();
+  };
+};
+
+export const removeFromList = (attractionId) => {
+  return (dispatch) => {
+    (async () => {
+      let { data } = await instance.delete(`/attractions/${attractionId}/list`);
+      if (data !== "WRONG REQUEST") {
+        dispatch({ type: "UPDATE_USER_LIST", payload: data });
+
+        dispatch({
+          type: "FLASH_MESSAGE",
+          payload: "Attraction has been removed to your list",
+        });
+        setTimeout(() => {
+          dispatch({
+            type: "FLASH_MESSAGE",
+            payload: "",
+          });
+        }, 5000);
+      }
     })();
   };
 };

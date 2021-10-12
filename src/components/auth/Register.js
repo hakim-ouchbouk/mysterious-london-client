@@ -17,7 +17,7 @@ import {
   Error,
   FlashError,
 } from "../styledComponents/authPage";
-import { MainContainer } from "../styledComponents/general";
+import { LoadingRing, MainContainer } from "../styledComponents/general";
 
 class Register extends React.Component {
   state = {
@@ -27,6 +27,7 @@ class Register extends React.Component {
     usernameError: "",
     passwordError: "",
     emailError: "",
+    loading: false,
   };
 
   usernameChange = (e) => {
@@ -67,9 +68,9 @@ class Register extends React.Component {
 
     if (!usernameError && !passwordError && !emailError) {
       this.props.register(this.state);
+      this.setState({ loading: true });
     }
   };
-
 
   render() {
     if (this.props.user && this.props.user.loggedIn) history.push("/");
@@ -77,11 +78,12 @@ class Register extends React.Component {
     return (
       <MainContainer>
         <CenterText>
-          <Title>Register
-          {this.props.user.error && <FlashError>{this.props.user.error}</FlashError>}
-
+          <Title>
+            Register
+            {this.props.user.error && (
+              <FlashError>{this.props.user.error}</FlashError>
+            )}
           </Title>
-          
         </CenterText>
 
         <Container>
@@ -159,7 +161,8 @@ class Register extends React.Component {
               />
               <Error>{this.state.passwordError}</Error>
             </div>
-            <Button type="submit">Register</Button>
+            <Button type="submit">
+              {this.state.loading && <LoadingRing/>}Register</Button>
           </form>
         </Container>
       </MainContainer>

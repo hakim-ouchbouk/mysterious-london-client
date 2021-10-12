@@ -1,8 +1,10 @@
 import history from "../history";
 import axios from "axios";
 
+// let url =  "http://localhost:3001";
+
 let instance = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: 'http://localhost:3001/api', 
   withCredentials: true,
 });
 
@@ -70,10 +72,7 @@ export const createAttraction = (values) => {
   }
   return (dispatch) => {
     (async () => {
-      dispatchMessage(dispatch, {
-        type: "FLASH_MESSAGE",
-        payload: "Attraction is being submitted",
-      });
+     
       let { data } = await instance.post("/attractions", fd);
       dispatch({ type: "CREAT_ATTRACTION", payload: data });
 
@@ -100,10 +99,6 @@ export const editAttraction = (values) => {
   }
   return (dispatch) => {
     (async () => {
-      dispatchMessage(dispatch, {
-        type: "FLASH_MESSAGE",
-        payload: "The changes are being submitted",
-      });
 
       let { data } = await instance.put(`/attractions/${_id}`, fd);
 

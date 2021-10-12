@@ -20,6 +20,7 @@ import {
   FlashMessage,
 } from "../styledComponents/createAttraction";
 import { Error } from "../styledComponents/authPage";
+import { LoadingRing } from "../styledComponents/general";
 
 class Edit extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class Edit extends React.Component {
       descriptionError: "",
       locationError: "",
       imagesError: "",
+      loading: false,
     };
   }
 
@@ -87,7 +89,6 @@ class Edit extends React.Component {
     let locationError = this.state.locationError;
     let descriptionError = this.state.descriptionError;
 
-
     if (!nameError && !descriptionError && !locationError) {
       if (
         this.state.deleteImages.length ===
@@ -97,6 +98,7 @@ class Edit extends React.Component {
         this.setState({ imagesError: "You must upload at least one image" });
       } else {
         this.props.editAttraction({ ...this.state, _id });
+        this.setState({ loading: true });
       }
     }
   };
@@ -263,7 +265,9 @@ class Edit extends React.Component {
               />
               <Error>{this.state.imagesError}</Error>
             </div>
-            <Button type="submit">Edit Attraction</Button>
+            <Button type="submit">
+              {this.state.loading && <LoadingRing />}Edit Attraction
+            </Button>
           </form>
         </Container>
       </div>

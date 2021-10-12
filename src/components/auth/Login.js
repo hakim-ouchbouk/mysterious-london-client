@@ -18,7 +18,7 @@ import {
   Error,
   FlashError,
 } from "../styledComponents/authPage";
-import { MainContainer } from "../styledComponents/general";
+import { LoadingRing, MainContainer } from "../styledComponents/general";
 import LoginGoogle from "./LoginGoogle";
 import { IoLogoGoogle } from "react-icons/io5";
 
@@ -28,6 +28,7 @@ class Login extends React.Component {
     password: "",
     usernameError: "",
     passwordError: "",
+    loading: false,
   };
 
   usernameChange = (e) => {
@@ -57,6 +58,7 @@ class Login extends React.Component {
 
     if (!usernameError && !passwordError) {
       this.props.login(this.state);
+      this.setState({loading:true})
     }
   };
 
@@ -67,7 +69,9 @@ class Login extends React.Component {
         <CenterText>
           <Title>
             Login
-            {this.props.user.error && <FlashError>{this.props.user.error}</FlashError>}
+            {this.props.user.error && (
+              <FlashError>{this.props.user.error}</FlashError>
+            )}
           </Title>
         </CenterText>
         <Container>
@@ -123,7 +127,9 @@ class Login extends React.Component {
               />
               <Error>{this.state.passwordError}</Error>
             </div>
-            <Button type="submit">Login</Button>
+            <Button type="submit">
+              {this.state.loading && <LoadingRing />}Login
+            </Button>
 
             <CenterText style={{ marginTop: "15px" }}>Or</CenterText>
 

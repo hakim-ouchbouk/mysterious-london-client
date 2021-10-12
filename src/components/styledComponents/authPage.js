@@ -1,54 +1,45 @@
 import styled from "styled-components";
 
-// SPACING SYSTEM (px):
-//   2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
-
-// FONT SIZE SYSTEM (px):
-//   10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
-
-//#f76707
-//#e9ecef
-// #78350F
-
 export const Container = styled.div`
-  width: 400px;
+  width: 40rem;
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  /* background-color: #e9ecef; */
-  padding: 44px 55px;
-  /* border-radius: 10px; */
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+  padding: 4.4rem 5.5rem;
+  box-shadow: 0 0.2rem 2rem rgba(0, 0, 0, 0.15);
 `;
 
 export const Input = styled.input`
   width: 100%;
-  height: 52px;
-  margin: 12px 0;
-  /* margin-bottom: 30px; */
+  height: 5.2rem;
+  margin: 1.2rem 0;
   font-family: inherit;
   outline: none;
   border: none;
-  padding: 10px;
-  font-size: 18px;
+  padding: 1rem;
+  font-size: 1.8rem;
   background-color: #f3f4f6;
   border: ${({ error }) => (error ? "1px solid red" : "none")};
 `;
 
 export const Label = styled.label`
   color: #212529;
-  font-size: 20px;
+  font-size: 2rem;
 `;
 
 export const Button = styled.button`
   width: 100%;
-  height: 52px;
+  height: 5.2rem;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
   color: white;
   background-color: #065f46;
   border: none;
-  font-size: 25px;
+  font-size: 2.5rem;
   transition: all 300ms;
-  margin-top: 18px;
+  margin-top: 1.8rem;
   &:hover {
     background-color: #064e3b;
   }
@@ -56,12 +47,12 @@ export const Button = styled.button`
 
 export const GoogleButton = styled.button`
   width: 100%;
-  height: 52px;
+  height: 5.2rem;
   color: white;
-  margin-top: 20px;
+  margin-top: 2rem;
   background-color: #de5246;
   border: none;
-  font-size: 25px;
+  font-size: 2.5rem;
   transition: all 300ms;
   &:hover {
     background-color: #b91c1c;
@@ -70,9 +61,9 @@ export const GoogleButton = styled.button`
 
 export const Title = styled.h1`
   position: relative;
-  font-size: 42px;
+  font-size: 4.2rem;
   color: #212529;
-  margin: 86px 0 60px 0;
+  margin: 8.6rem 0 6rem 0;
 `;
 
 export const CenterText = styled.div`
@@ -81,14 +72,14 @@ export const CenterText = styled.div`
 
 export const Error = styled.p`
   color: red;
-  font-size: 16px;
-  margin-bottom: 16px;
+  font-size: 1.6rem;
+  margin-bottom: 1.6rem;
 `;
 
 export const FlashError = styled.p`
   position: absolute;
   color: red;
-  font-size: 18px;
-  right:50%;
-  transform: translate(50% ,20px);
+  font-size: 1.8rem;
+  right: 50%;
+  transform: translate(50%, 2rem);
 `;

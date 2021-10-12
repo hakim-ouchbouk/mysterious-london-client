@@ -1,8 +1,32 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const MainContainer = styled.div`
   width: 80%;
-  margin: 0 auto 70px auto;
+  margin: 0 auto 7rem auto;
 `;
 
+const loadingKF = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
 
+export const LoadingRing = styled.div`
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+
+  &::after {
+    content: " ";
+    display: inline-block;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: ${loadingKF} 1.2s linear infinite;
+  }
+`;

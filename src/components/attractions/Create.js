@@ -19,7 +19,7 @@ import {
   Title,
   FlashMessage,
 } from "../styledComponents/createAttraction";
-import { MainContainer } from "../styledComponents/general";
+import { LoadingRing, MainContainer } from "../styledComponents/general";
 import { Error } from "../styledComponents/authPage";
 
 class Create extends React.Component {
@@ -35,6 +35,7 @@ class Create extends React.Component {
       descriptionError: "",
       locationError: "",
       imagesError: "",
+      loading: false,
     };
   }
 
@@ -93,12 +94,13 @@ class Create extends React.Component {
     }
 
     let addresses = this.props.addresses;
-
+    let firstAddress = ''
     if (addresses.length > 0 && this.state.location === "") {
       this.setState({ location: addresses[0].address });
+      firstAddress = addresses[0].address;
     }
     let locationError = validateLocation.validate({
-      location: this.state.location || addresses[0].address,
+      location: this.state.location || firstAddress ,
     }).error;
 
     if (locationError) {
@@ -118,6 +120,7 @@ class Create extends React.Component {
     if (!nameError && !locationError && !descriptionError && !imagesError) {
       this.props.createAttraction(this.state);
       this.setState({ location: "" });
+      this.setState({ loading: true });
     }
   };
 
@@ -236,7 +239,10 @@ class Create extends React.Component {
               />
               <Error>{this.state.imagesError}</Error>
             </div>
-            <Button type="submit">Add Attraction</Button>
+            <Button type="submit">
+              {this.state.loading && <LoadingRing />}
+               Submit Attraction
+            </Button>
           </form>
         </Container>
       </div>

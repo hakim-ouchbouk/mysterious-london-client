@@ -5,12 +5,12 @@ const GlobalStyles = createGlobalStyle`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 html {
-  /* font-size: 63.5%;/ */
+  font-size: 63.5%;
 }
-
 body {
   /* font-family: 'Inter', Arial, Helvetica, sans-serif; */
   line-height: 1;

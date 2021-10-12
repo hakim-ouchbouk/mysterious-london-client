@@ -35,7 +35,6 @@ import {
   LeftBtn,
   List,
   LoginButton,
-  MapContainer,
   Rating,
   RatingsNumber,
   RegisterButton,
@@ -269,7 +268,7 @@ class AttractionDetails extends React.Component {
             }}
           >
             <List />
-            <p>Remove </p>
+            <p className="text">Remove </p>
           </Btn>
         );
       } else {
@@ -280,7 +279,7 @@ class AttractionDetails extends React.Component {
             }}
           >
             <List />
-            <p>Add to List</p>
+            <p className="text">Add to List</p>
           </Btn>
         );
       }
@@ -301,7 +300,7 @@ class AttractionDetails extends React.Component {
           }}
         >
           <Star />
-          <p>Want to Vist</p>
+          <p className="text">Want to Vist</p>
           <p className="number">{wantToVisit}</p>
         </Btn>
         <Btn
@@ -310,7 +309,7 @@ class AttractionDetails extends React.Component {
           }}
         >
           <Flag />
-          <p>Been There</p>
+          <p className="text">Been There</p>
           <p className="number">{visited}</p>
         </Btn>
 
@@ -372,8 +371,8 @@ class AttractionDetails extends React.Component {
                 <Rating>
                   <StarRatings
                     rating={averageRating}
-                    starDimension="20px"
-                    starSpacing="5px"
+                    starDimension="1.8rem"
+                    starSpacing="2px"
                     starRatedColor="#065f46"
                   />
                   <RatingsNumber>
@@ -415,12 +414,8 @@ class AttractionDetails extends React.Component {
           </MainContainer>
           <BodyContainer>
             <SmallContainer>
-              <div>
-                <Description>{description}</Description>
-              </div>
-              <MapContainer>
-                <Map geocode={geocode} />
-              </MapContainer>
+              <Description>{description}</Description>
+              <Map geocode={geocode} />
 
               <AddReview>{this.renderAddReview()}</AddReview>
               <Reviews>{this.renderReviews()}</Reviews>

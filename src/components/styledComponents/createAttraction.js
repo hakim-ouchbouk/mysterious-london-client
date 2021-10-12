@@ -10,43 +10,55 @@ import styled from "styled-components";
 // #065f46
 
 export const Container = styled.div`
-  width: 600px;
+  width: 60rem;
   margin: 0 auto;
-  margin-top: 48px;
+  margin-top: 4.8rem;
   display: flex;
   justify-content: center;
-  /* background-color: #e9ecef; */
-  padding: 44px 55px;
-  /* border-radius: 10px; */
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+  padding: 4.4rem 5.5rem;
+  box-shadow: 0 2px 2rem rgba(0, 0, 0, 0.15);
+
+  @media (max-width: 1024px) {
+    width: 50rem;
+    
+  }
+  
+  @media (max-width: 768px) {
+    width: 40rem;
+  }
+
 `;
 
 export const Input = styled.input`
   width: 100%;
-  height: 52px;
-  margin: 12px 0;
+  height: 5.2rem;
+  margin: 1.2rem 0;
   font-family: sans-serif;
   outline: none;
   border: none;
-  padding: 10px;
-  font-size: 18px;
+  padding: 1rem;
+  font-size: 1.8rem;
   background-color: #f3f4f6;
   border: ${({ error }) => (error ? "1px solid red" : "none")};
 `;
 
 export const Label = styled.label`
   color: #212529;
-  font-size: 24px;
+  font-size: 2.4rem;
   font-weight: bold;
 `;
 
 export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  justify-content: center;
   width: 100%;
-  height: 52px;
+  height: 5.2rem;
   color: white;
   background-color: #065f46;
   border: none;
-  font-size: 25px;
+  font-size: 2.5rem;
   transition: all 300ms;
   &:hover {
     background-color: #064e3b;
@@ -55,9 +67,9 @@ export const Button = styled.button`
 
 export const Title = styled.h1`
   position: relative;
-  font-size: 42px;
+  font-size: 4.2rem;
   color: #212529;
-  margin: 42px 0 92px 0;
+  margin: 4.2rem 0 9.2rem 0;
 `;
 
 export const CenterText = styled.div`
@@ -66,11 +78,11 @@ export const CenterText = styled.div`
 
 export const TextArea = styled.textarea`
   width: 100%;
-  height: 100px;
+  height: 16rem;
   border: none;
   outline: none;
-  margin: 12px 0;
-  padding: 12px;
+  margin: 1.2rem 0;
+  padding: 1.2rem;
   line-height: 1.3;
   background-color: #f3f4f6;
   border: ${({ error }) => (error ? "1px solid red" : "none")};
@@ -78,23 +90,23 @@ export const TextArea = styled.textarea`
 
 export const Select = styled.select`
   width: 100%;
-  height: 52px;
+  height: 5.2rem;
   border: none;
   outline: none;
-  margin-bottom: 30px;
-  padding: 12px;
+  margin-bottom: 3rem;
+  padding: 1.2rem;
   background-color: #f3f4f6;
 `;
 
 export const FlashMessage = styled.p`
   position: absolute;
-  font-size: 25px;
+  font-size: 2.5rem;
   color: #064e3b;
   background-color: #d1fae5;
-  border-radius: 10px;
+  border-radius: 1rem;
   right: 50%;
-  transform: translate(50%, 20px);
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 30px;
+  transform: translate(50%, 2rem);
+  padding: 1.2rem;
+  border-radius: 1rem;
+  margin-bottom: 3rem;
 `;

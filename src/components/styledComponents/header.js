@@ -6,7 +6,7 @@ export const Brand = styled.p`
   margin: 0;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 2rem;
 `;
 
 export const NavItem = styled.p`
@@ -14,7 +14,7 @@ export const NavItem = styled.p`
   padding: 0;
   margin: 0;
   text-transform: uppercase;
-  font-size: 20px;
+  font-size: 2rem;
 `;
 
 

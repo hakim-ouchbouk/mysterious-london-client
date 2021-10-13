@@ -44,7 +44,7 @@ const Marker = ({ attraction }) => {
         </AttractionCard>
       )}
       {!isShown && (
-        <img alt="marker" src="/marker.png" height="30px" width="30px" />
+        <img style={{transform: "translate(0,-100%)"}} alt="marker" src="/marker.png" height="25px" width="25px" />
       )}
     </div>
   );

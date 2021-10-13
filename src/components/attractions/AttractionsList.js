@@ -73,6 +73,8 @@ class AttractionsList extends React.Component {
   };
 
   render() {
+
+
     return (
       <MainContainer>
         <CenterText>

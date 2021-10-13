@@ -14,13 +14,14 @@ class Header extends React.Component {
   };
 
   render() {
+
     return (
-      <Navbar sticky="top" bg="light" expand="lg">
+      <Navbar style={{ backgroundColor: "#F3F4F6", borderBottom:'1px solid #D1D5DB', height:'45px' }} expand="lg">
         <Container>
           <Navbar.Brand as={Link} to="/">
-            <Brand>Arcane London</Brand>
+            <Brand>Mysterious London</Brand>
           </Navbar.Brand>
-          <Navbar.Toggle color='red' aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">
@@ -30,7 +31,7 @@ class Header extends React.Component {
                 <NavItem>Map</NavItem>
               </Nav.Link>
 
-              {this.props.user.loggedIn && (
+              { this.props.user.loggedIn && (
                 <Nav.Link as={Link} to="/create">
                   <NavItem>Add Attraction</NavItem>
                 </Nav.Link>

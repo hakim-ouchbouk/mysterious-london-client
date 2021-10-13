@@ -72,6 +72,12 @@ class Register extends React.Component {
     }
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.loading && nextProps.user.error) {
+      return { loading: false };
+    }
+  }
+
   render() {
     if (this.props.user && this.props.user.loggedIn) history.push("/");
 
@@ -162,7 +168,8 @@ class Register extends React.Component {
               <Error>{this.state.passwordError}</Error>
             </div>
             <Button type="submit">
-              {this.state.loading && <LoadingRing/>}Register</Button>
+              {this.state.loading && <LoadingRing />}Register
+            </Button>
           </form>
         </Container>
       </MainContainer>

@@ -58,9 +58,15 @@ class Login extends React.Component {
 
     if (!usernameError && !passwordError) {
       this.props.login(this.state);
-      this.setState({loading:true})
+      this.setState({ loading: true });
     }
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.loading  && nextProps.user.error) {
+      return { loading:false};
+    }
+  }
 
   render() {
     if (this.props.user && this.props.user.loggedIn) history.push("/");

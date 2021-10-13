@@ -60,6 +60,7 @@ class AttractionDetails extends React.Component {
       review: "",
       stars: 0,
       reviewError: "",
+      scroll: false,
     };
     this.imgsContainer = React.createRef();
   }
@@ -67,7 +68,17 @@ class AttractionDetails extends React.Component {
   componentDidMount() {
     this.props.getAttraction(this.props.match.params.id);
     if (this.props.user.loggedIn) this.props.getUserAttractions();
+
+    setTimeout(() => {
+      let container = this.imgsContainer.current;
+      if (container && container.scrollWidth > container.clientWidth ) {
+        this.setState({ scroll: true });
+      } else {
+        this.setState({ scroll: false });
+      }
+    }, 500);
   }
+
 
   renderReviews = () => {
     if (this.props.attraction.reviews.length < 1) return "";
@@ -338,13 +349,6 @@ class AttractionDetails extends React.Component {
     }, speed);
   };
 
-  renderScroll = (container) => {
-    if (!container || container.clientWidth >= container.scrollWidth)
-      return false;
-
-    return true;
-  };
-
   renderAttraction = () => {
     if (this.props.attraction) {
       let {
@@ -392,7 +396,7 @@ class AttractionDetails extends React.Component {
             </Header>
 
             <ImgsWrapper>
-              {this.renderScroll(this.imgsContainer.current) && (
+              {this.state.scroll && (
                 <LeftBtn
                   onClick={() => {
                     this.sideScroll(this.imgsContainer.current, 7, 300, -10);
@@ -400,7 +404,7 @@ class AttractionDetails extends React.Component {
                 ></LeftBtn>
               )}
 
-              {this.renderScroll(this.imgsContainer.current) && (
+              {this.state.scroll && (
                 <RightBtn
                   onClick={() => {
                     this.sideScroll(this.imgsContainer.current, 7, 300, 10);
@@ -429,6 +433,7 @@ class AttractionDetails extends React.Component {
   };
 
   render() {
+    if (!this.props.user) history.push("/");
     return <div>{this.renderAttraction()}</div>;
   }
 }

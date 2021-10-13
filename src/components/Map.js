@@ -5,7 +5,7 @@ import GoogleMapReact from "google-map-react";
 
 const Marker = () => (
   <div>
-    <img alt="marker" src="/marker.png" height="25px" width="25px" />
+    <img style={{transform: "translate(0,-100%)"}} alt="marker" src="/marker.png" height="20px" width="20px" />
   </div>
 );
 class Map extends Component {

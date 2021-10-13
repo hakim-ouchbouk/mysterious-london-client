@@ -5,6 +5,7 @@ const GlobalStyles = createGlobalStyle`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 
 }
 
@@ -12,7 +13,7 @@ html {
   font-size: 63.5%;
 }
 body {
-  /* font-family: 'Inter', Arial, Helvetica, sans-serif; */
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   line-height: 1;
   font-weight: 400;
   color: #555;
@@ -23,6 +24,8 @@ body {
   -ms-user-select: none; /* Internet Explorer/Edge */
   -moz-user-select: none; /* Old versions of Firefox */
   user-select: none;
+  background-color: #F9FAFB
+;
 }
 `;
 

@@ -32,6 +32,7 @@ export const Btn = styled.button`
   border: none;
   background-color: white;
   color: #065f46;
+  background-color:#F9FAFB ;
   .number {
     font-size: 1.8rem;
   }
@@ -87,8 +88,8 @@ export const LeftBtn = styled(IoArrowBackSharp)`
   color: #065f46;
 
   @media (max-width: 768px) {
-  font-size: 3rem;
-  left: -4rem;
+    font-size: 3rem;
+    left: -4rem;
   }
 `;
 
@@ -103,8 +104,8 @@ export const RightBtn = styled(IoArrowForwardSharp)`
   color: #065f46;
 
   @media (max-width: 768px) {
-  font-size: 3rem;
-    right: -4rem
+    font-size: 3rem;
+    right: -4rem;
   }
 `;
 
@@ -115,7 +116,7 @@ export const BodyContainer = styled.div`
 export const SmallContainer = styled.div`
   width: 80%;
   display: grid;
-  grid-template-columns: 2.5fr 1fr;
+  grid-template-columns: 3fr 1fr;
   column-gap: 3rem;
   padding: 6.4rem;
   margin: 0 auto;
@@ -138,7 +139,6 @@ export const Description = styled.p`
     font-size: 1.8rem;
   }
 `;
-
 
 export const AddReview = styled.div`
   width: 60%;
@@ -203,8 +203,7 @@ export const DeleteButton = styled.button`
 `;
 
 export const Reviews = styled.div`
-  width: 60%;
-
+  width: 90%;
   .title {
     font-size: 4rem;
     margin-bottom: 2.5rem;
@@ -213,13 +212,14 @@ export const Reviews = styled.div`
   @media (max-width: 1024px) {
     width: 100%;
   }
-  
 `;
 export const Review = styled.div`
   margin-bottom: 4.8rem;
   .content {
     font-size: 2rem;
     line-height: 1.3;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0.01px;
   }
 `;
 
@@ -281,12 +281,12 @@ export const RegisterButton = styled.button`
 
 export const FlashMessage = styled.p`
   position: absolute;
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   color: #064e3b;
-  top: 10%;
+  top: -25px;
   left: 50%;
   background-color: #d1fae5;
-  padding: 1.2rem;
+  padding: 1rem;
   border-radius: 1rem;
 `;
 

@@ -1,10 +1,9 @@
 import history from "../history";
 import axios from "axios";
 
-// let url =  "http://localhost:3001";
 
 let instance = axios.create({
-  baseURL: 'http://localhost:3001/api', 
+  baseURL: '/api', 
   withCredentials: true,
 });
 
